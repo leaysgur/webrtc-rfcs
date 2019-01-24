@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>RFC to Markdown</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-size: 18px;
+    }
+    header {
+      height: 10vh;
+      text-align: center;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 90vh;
+    }
+    textarea {
+      background-color: #eee;
+      height: 100%;
+      padding: 4px;
+      font-size: 12px;
+      font-family: Menlo, Monaco, Consolas, monospace;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>RFC to Markdown</h1>
+    <p>Copy single section header and contents, and paste it, you will get Markdown.</p>
+    <p>Remove page header and footer, escape figures w/ ```backquote```.</p>
+  </header>
+  <main>
+    <textarea placeholder="If you paste raw ugly text RFC here,"></textarea>
+    <textarea readonly placeholder="Markdown formatted RFC appears!"></textarea>
+  </main>
+  <script src="./js/main.js" type="module"></script>
+</body>
+</html>
