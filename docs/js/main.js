@@ -1,10 +1,16 @@
-const [$input, $output] = document.querySelectorAll('textarea');
 import { format } from './formatter/index.js';
 
-requestAnimationFrame(render);
-function render() {
-  requestAnimationFrame(render);
+(function main() {
+  const [$input, $output] = document.querySelectorAll('textarea');
 
-  const src = $input.value.trim();
-  $output.value = src.length ? format(src) : '';
-}
+  // auto select
+  $input.onclick = $output.onclick = ev => ev.target.select();
+
+  // requestAnimationFrame(render);
+  (function render() {
+    requestAnimationFrame(render);
+
+    const src = $input.value.trim();
+    $output.value = src.length ? format(src) : '';
+  }());
+}());
