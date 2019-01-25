@@ -1,6 +1,15 @@
 const listStartRe = /^(o)(\s+)/;
 export function formatBody(rest) {
-  const lines = [];
+  // trimStart()
+  while (rest[0].trim().length === 0) {
+    rest.shift();
+  }
+  // trimEnd()
+  while (rest[rest.length - 1].trim().length === 0) {
+    rest.pop();
+  }
+
+  const lines = [''];
   let isEscaped = false;
   for (const line of rest) {
     // start
@@ -28,21 +37,16 @@ export function formatBody(rest) {
     // almost all lines are here
     else {
       // starts with 3 spaces
-      let text = line.slice(3);
+      let [, text] = line.split('   ');
 
       // if list marker found
       if (listStartRe.test(text)) {
         text = text.replace(listStartRe, '*$2');
       }
 
-      lines[lines.length - 1] += text;
+      lines[lines.length - 1] += ` ${text}`;
     }
   }
 
-  // trimStart()
-  while (lines[0].trim().length === 0) {
-    lines.shift();
-  }
-
-  return lines.join('\n\n');
+  return lines.map(l => l.trim()).join('\n\n');
 }
