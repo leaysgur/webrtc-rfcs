@@ -12,4 +12,12 @@ for (const line of md.split('\n')) {
   }
 }
 
-fs.writeFileSync(`./summary/${fileName}`, toc.join('\n\n'));
+const summary = `
+> [Read original](../md/${fileName})
+
+---
+
+${toc.join('\n\n')}
+`.trim();
+
+fs.writeFileSync(`./summary/${fileName}`, summary);
