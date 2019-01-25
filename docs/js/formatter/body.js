@@ -1,4 +1,4 @@
-const listStartRe = /^(o)(\s+)/;
+const listStartRe = /^(\s{3})(\s+)?[o*](\s+)/;
 export function formatBody(rest) {
   trimArr(rest);
 
@@ -29,16 +29,30 @@ export function formatBody(rest) {
     }
     // almost all lines are here
     else {
-      // starts with 3 spaces
-      let text = line.trim();
-
+      let text;
       // if list marker found
-      if (listStartRe.test(text)) {
-        text = text.replace(listStartRe, '*$2');
+      if (listStartRe.test(line)) {
+        text = line.replace(listStartRe, '$2*$3');
+      } else {
+        // starts with 3 spaces
+        text = line.trim();
       }
 
       const curLine = lines[lines.length - 1];
-      lines[lines.length - 1] += (curLine.length ? ` ${text}` : text);
+      if (curLine.length) {
+        // word continues
+        if (curLine[curLine.length - 1].endsWith('-')) {
+          lines[lines.length - 1] += text;
+        }
+        // join as sentence
+        else {
+          lines[lines.length - 1] += ` ${text}`;
+        }
+      }
+      // first word of sentence
+      else {
+        lines[lines.length - 1] += text;
+      }
     }
   }
 
