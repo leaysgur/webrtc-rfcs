@@ -1,13 +1,6 @@
 const listStartRe = /^(o)(\s+)/;
 export function formatBody(rest) {
-  // trimStart()
-  while (rest[0].trim().length === 0) {
-    rest.shift();
-  }
-  // trimEnd()
-  while (rest[rest.length - 1].trim().length === 0) {
-    rest.pop();
-  }
+  trimArr(rest);
 
   const lines = [''];
   let isEscaped = false;
@@ -17,7 +10,7 @@ export function formatBody(rest) {
       // end
       if (isEscaped) {
         isEscaped = false;
-        lines.push(line);
+        lines[lines.length - 1] += `\n${line}`;
         continue;
       } else {
         isEscaped = true;
@@ -26,7 +19,7 @@ export function formatBody(rest) {
 
     // inside code block
     if (isEscaped) {
-      lines.push(line);
+      lines[lines.length - 1] += `\n${line}`;
       continue;
     }
 
@@ -37,16 +30,28 @@ export function formatBody(rest) {
     // almost all lines are here
     else {
       // starts with 3 spaces
-      let [, text] = line.split('   ');
+      let text = line.trim();
 
       // if list marker found
       if (listStartRe.test(text)) {
         text = text.replace(listStartRe, '*$2');
       }
 
-      lines[lines.length - 1] += ` ${text}`;
+      const curLine = lines[lines.length - 1];
+      lines[lines.length - 1] += (curLine.length ? ` ${text}` : text);
     }
   }
 
-  return lines.map(l => l.trim()).join('\n\n');
+  return lines.join('\n\n');
+}
+
+function trimArr(rest) {
+  // trimStart()
+  while (rest[0].trim().length === 0) {
+    rest.shift();
+  }
+  // trimEnd()
+  while (rest[rest.length - 1].trim().length === 0) {
+    rest.pop();
+  }
 }
