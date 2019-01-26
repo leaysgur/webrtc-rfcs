@@ -12,5 +12,13 @@ import { txtToMarkdown } from './txt-to-markdown/index.js';
 
     const src = $input.value.trim();
     $output.value = src.length ? txtToMarkdown(src) : '';
+
+    syncScrollPos($input, $output);
   }());
 }());
+
+function syncScrollPos(el1, el2) {
+  const pos = el1.scrollTop / el1.scrollHeight;
+  el2.scrollTop = el2.scrollHeight * pos;
+}
+
