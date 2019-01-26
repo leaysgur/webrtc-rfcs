@@ -1,4 +1,4 @@
-import { format } from './formatter/index.js';
+import { txtToMarkdown } from './txt-to-markdown/index.js';
 
 (function main() {
   const [$input, $output] = document.querySelectorAll('textarea');
@@ -11,6 +11,6 @@ import { format } from './formatter/index.js';
     requestAnimationFrame(render);
 
     const src = $input.value.trim();
-    $output.value = src.length ? format(src) : '';
+    $output.value = src.length ? txtToMarkdown(src) : '';
   }());
 }());

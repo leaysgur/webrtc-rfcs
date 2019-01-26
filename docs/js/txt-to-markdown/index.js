@@ -1,25 +1,28 @@
+import { formatTitle } from './title.js';
+import { trimArr, appendLast } from './utils.js';
+
 const listStartRe = /^(\s{3})(\s+)?[o*](\s+)/;
-export function formatBody(rest) {
-  trimArr(rest);
+export function txtToMarkdown(text) {
+  const texts = text.split('\n');
+  trimArr(texts);
 
   const lines = [''];
   let isEscaped = false;
-  for (const line of rest) {
-    // start
-    if (line === '```') {
+  for (const line of texts) {
+    // start escape block
+    if (line.startsWith('```')) {
       // end
       if (isEscaped) {
         isEscaped = false;
-        lines[lines.length - 1] += `\n${line}`;
+        appendLast(lines, `\n${line}`);
         continue;
       } else {
         isEscaped = true;
       }
     }
-
     // inside code block
     if (isEscaped) {
-      lines[lines.length - 1] += `\n${line}`;
+      appendLast(lines, `\n${line}`);
       continue;
     }
 
@@ -29,6 +32,14 @@ export function formatBody(rest) {
     }
     // almost all lines are here
     else {
+      // section header
+      if (!line.startsWith('   ')) {
+        // remove empty paragraph
+        lines.length && lines.pop();
+        lines.push(formatTitle(line));
+        continue;
+      }
+
       let text;
       // if list marker found
       if (listStartRe.test(line)) {
@@ -40,32 +51,22 @@ export function formatBody(rest) {
 
       const curLine = lines[lines.length - 1];
       if (curLine.length) {
-        // word continues
+        // last word continues
         if (curLine[curLine.length - 1].endsWith('-')) {
-          lines[lines.length - 1] += text;
+          appendLast(lines, text);
         }
         // join as sentence
         else {
-          lines[lines.length - 1] += ` ${text}`;
+          appendLast(lines, ` ${text}`);
         }
       }
       // first word of sentence
       else {
-        lines[lines.length - 1] += text;
+        appendLast(lines, text);
       }
     }
   }
 
+  trimArr(lines);
   return lines.join('\n\n');
-}
-
-function trimArr(rest) {
-  // trimStart()
-  while (rest[0].trim().length === 0) {
-    rest.shift();
-  }
-  // trimEnd()
-  while (rest[rest.length - 1].trim().length === 0) {
-    rest.pop();
-  }
 }

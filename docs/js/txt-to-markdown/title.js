@@ -1,6 +1,6 @@
-const titleRe = /\.\s+/;
+const titleSplitRe = /\.\s+/;
 export function formatTitle(head) {
-  const [id, title] = head.split(titleRe);
+  const [id, title] = head.split(titleSplitRe);
 
   // e.g.: 1. Introduction
   if (id && title) {
