@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>RFC.txt to RFC.md</title>
@@ -11,13 +11,13 @@
       font-size: 18px;
     }
     header {
-      height: 10vh;
+      height: 80px;
       text-align: center;
     }
     main {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      height: 90vh;
+      height: calc(100vh - 80px);
     }
     textarea {
       background-color: #eee;
@@ -31,8 +31,8 @@
 <body>
   <header>
     <h1>RFC.txt to RFC.md</h1>
-    <p>Copy RFC texts, and paste it, you will get Markdown.</p>
-    <p>Remove page header and footer, escape figures w/ ```backquote```.</p>
+    <p>Copy and paste RFC texts, you will get Markdown.</p>
+    <p>Remove page header and footer, escape figures w/ ```backquote``` manually.</p>
   </header>
   <main>
     <textarea placeholder="If you paste raw ugly text RFC here,"></textarea>
