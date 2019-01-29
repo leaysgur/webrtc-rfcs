@@ -1,4 +1,4 @@
-# Transports for WebRTC draft-ietf-rtcweb-transports-17
+# Transports for WebRTC
 
 ## 1. Introduction
 
