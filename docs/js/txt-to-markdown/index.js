@@ -1,7 +1,7 @@
 import { formatTitle } from './title.js';
 import { trimArr, appendLast } from './utils.js';
 
-const listStartRe = /^(\s{3})(\s+)?[o*](\s+)/;
+const listStartRe = /^(\s{3})(\s+)?[+o*](\s+)/;
 export function txtToMarkdown(text) {
   const texts = text.split('\n');
   trimArr(texts);
