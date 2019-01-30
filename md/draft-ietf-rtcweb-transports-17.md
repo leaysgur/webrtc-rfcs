@@ -197,15 +197,3 @@ It MAY choose to support other configurations, such as bundling each media type 
 Sending data channel data over multiple 5-tuples is not supported.
 
 A receiving implementation MUST be able to receive media and data in all these configurations.
-
-## 5. IANA Considerations
-
-This document makes no request of IANA.
-
-Note to RFC Editor: this section may be removed on publication as an RFC.
-
-## 6. Security Considerations
-
-RTCWEB security considerations are enumerated in [I-D.ietf-rtcweb-security].
-
-Security considerations pertaining to the use of DSCP are enumerated in [I-D.ietf-tsvwg-rtcweb-qos].
