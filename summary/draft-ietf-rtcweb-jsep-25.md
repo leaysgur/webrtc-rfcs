@@ -208,45 +208,163 @@
 
 ## 4. Interface
 
+- JSPEが実装するAPIについて
+- 実装されてる変数名・関数名は微妙に違うかもしれないので注意
+
 ### 4.1. PeerConnection
+
+- 本文なし
 
 #### 4.1.1. Constructor
 
+- ICE/STUN/TURNの設定などグローバルなパラメータを指定できる
+- `iceCandidatePolicy`: `all` or `relay`
+  - `all`: デフォルト、特に制限されず全部を対象にする
+  - `relay`: `relay`だけを使う
+- `iceCandidatePoolSize`: 事前に候補収集する数
+  - STUN/TURNサーバーのリソースを食うので、要求があるまで普通はやらない
+  - なのでデフォルトは`0`
+- `bundlePolicy`: `balanced` or `max-compat` or `max-bundle`
+  - draft-ietf-mmusic-sdp-bundle-negotiation にあるやつ
+  - `balanced`: バランスを取る
+  - `max-compat`: バンドルしない
+  - `max-bundle`: 最初の`m=`セクションにすべてバンドルする
+  - デフォルトは`balanced`
+- `rtcpMuxPolicy`: `negotiate` or `require`
+  - RTP/RTCPをmultiprexするかどうか
+  - `negotiate`: 別々に候補を集めるけど、`a=rtcp-mux`もつける
+  - `require`: `a=rtcp-mux-only`をつける
+  - デフォルトは`require`
+
 #### 4.1.2. addTrack
+
+- `MediaStreamTrack`を追加する
+  - `MediaStream`をあわせて渡すことで、同じ`LS`（LipSync）グループにできる
+  - RFC5888
+- `signalingState`が`have-remote-offer`のときは、最初の`RtpTransceiver`に
+  - それ以外のときは、新しい`RtpTransceiver`を作成する
 
 #### 4.1.3. removeTrack
 
+- `MediaStreamTrack`を削除する
+  - どの`RTPSender`かをあわせて指定する
+- 削除されたら、その`m=`セクションは`recevonly`か`inactive`になる
+  - 次に`createOffer()`されたとき
+  - SDPから消えるわけではないので
+
 #### 4.1.4. addTransceiver
+
+- `RtpTransceiver`を追加する
+  - `MediaStreamTrack`をあわせて渡すことでセットもできる
+- `recvonly`な`RtpTransceiver`を作りたいときに便利
+- `direction`と`sendEncodings`を設定できる
 
 #### 4.1.5. createDataChannel
 
+- Data Channelを作る
+  - はじめて作った場合は、ネゴシエーションが必要
+- 作られたすべてのDCは、同じSCTP/DTLSアソシエーションを使う
+  - なので同じ`m=`セクションに入る
+  - そういうわけで、一度ネゴシエーションできたなら、後から増やしてもJSEPには関係ない
+- その他指定できるオプションもいろいろあるが、それもJSEPには関係ない
+
 #### 4.1.6. createOffer
+
+- オファーSDPを生成する
+  - そこには既に設定されたメディアやシステムのコーデックなどが載る
+  - 既に集められたICEのcandidateがあればそれも
+  - `iceRestart`のためのオプションも渡せる
+- セッション確立後に呼ぶと、それまでの変更点が更新される
+- できたSDPは`setLocalDescription()`できるものでないといけない
+- これを呼んだ後は、ICEのクレデンシャルを生成するなどしてよい
+  - ただ実際に候補を収集したりはしない
+  - もちろんメディアを送ったりもしない
 
 #### 4.1.7. createAnswer
 
+- アンサーSDPを生成する
+  - 直近の`setRemoteDescription()`を反映したもの
+- 基本的には`createOffer()`のときと同じ
+
 #### 4.1.8. SessionDescriptionType
+
+- SDPのタイプは4つ
+  - `offer`, `pranswer`, `answer`, `rollback`
+- `offer`: オファー
+- `pranswer`: Provisionalなアンサー
+- `answer`: アンサー
+- `rollback`: 最後に`stable`だった状態に戻す用
 
 ##### 4.1.8.1. Use of Provisional Answers
 
+- 最終的な`answer`が届くまでの一時的なもの
+
 ##### 4.1.8.2. Rollback
+
+- `have-local-offfer`とかになったのをキャンセルできる
+- 中身は空っぽ
 
 #### 4.1.9. setLocalDescription
 
+- 自身のSDPを設定する
+- ICEの候補収集がはじまる
+  - プールされてるものがあればそれを使う
+- 既にオファーが`setRemoteDescription()`されていれば、メディアの送受信がはじまる
+  - メディアの準備ができてれば
+
 #### 4.1.10. setRemoteDescription
+
+- メディアのエンコードと送信をはじめられる
+- 既にアンサーを`setLocalDescription()`されていれば、メディアの送受信がはじまる
+  - メディアの準備ができてれば
 
 #### 4.1.11. currentLocalDescription
 
+- `localDescription`というGetterがコレ
+- 何もなければ`null`
+
 #### 4.1.12. pendingLocalDescription
+
+- `pendingLocalDescription`というGetterがコレ
+- `stable`か`have-remote-offer`のときは`null`
 
 #### 4.1.13. currentRemoteDescription
 
+- `remoteDescription`というGetterがコレ
+- 何もなければ`null`
+
 #### 4.1.14. pendingRemoteDescription
+
+- `pendingRemoteDescription`というGetterがコレ
+- `stable`か`have-local-offer`のときは`null`
 
 #### 4.1.15. canTrickleIceCandidates
 
+- リモート側が、TrickleICEできるかどうかを示すプロパティ
+  - たぶん実装されてない
+  - 3つの値がある
+- `null`: SDPがなくてわからない、初期状態
+- `ture`: 利用できる
+- `false`: 利用できない
+
 #### 4.1.16. setConfiguration
 
+- グローバルな設定を変えられる
+  - Construcotrで指定してたやつ
+- `iceServers`、`iceTransportPolicy`を変更すると、次の候補収集の挙動が変わる
+  - `needs-ice-restart`フラグが立つことがある
+    - ICEクレデンシャルが更新される
+- `iceCandidatePoolSize`は変更できない
+  - `setLocalDescription()`してないならできる
+- `rtcpMuxPolicy`と`bundlePolicy`は変更できない
+
 #### 4.1.17. addIceCandidate
+
+- ICE Agentに`IceCandidate`を渡すことで更新を伝える
+  - `candidate`プロパティがあれば、新たな候補として扱う
+  - それがないなら、候補の終わりとして扱われる
+- それぞれどの`m=`セクション、`mid`に属するか決められる
+- 新たな候補を受け取ったら、接続確認が行われる
 
 ### 4.2. RtpTransceiver
 
