@@ -146,17 +146,65 @@
 
 ### 3.6. Video Size Negotiation
 
+- SDPの`a=imageattr`で動画のフレームサイズを設定できる
+- 受け取っても再生できないデカさの動画とかあるかも
+- JSEP的には、正方形ではないピクセルを送信しない
+  - 受信はする
+
 #### 3.6.1. Creating an imageattr Attribute
+
+- 特に制約がない場合、`a=imageattr`は省略される
+  - `sendonly`の場合も必ず省略する
+- 基本的にdirectionが`recv`のときに使うもの
+- 指定の例
+  - `a=imageattr:* recv [x=[48:1280],y=[48:720],q=1.0]`
+  - 48x48から1280x720まで、フォーマットは不問の場合
+  - `q`は`1.0`が推奨値
 
 #### 3.6.2. Interpreting imageattr Attributes
 
+- そもそもSDPでもadvisoryな項目なので、無視されることもある
+- JSEP的にはフォーマットごとに1つしか指定しない
+  - けどJSEPじゃないやつからは複数送られてくるかも
+  - その場合は後勝ち
+ - この属性のパースに失敗した場合は、そのフォーマットを送れない
+
 ### 3.7. Simulcast
+
+- 単一の`m=`セクションに複数の`MediaStreamTrack`を含むSimulcastができる
+  - 複数を送信できるけど、受信は1つ
+- `RTPSender`で指定する
+  - SDPにそれ用の記述（後述）をする
+  - 解釈されなかった場合は最初の設定だけ使う
+- Simulcastで受信したい旨を設定する方法は今のところない
+  - オファーで提示されても、それに応える術がない
+- このあたりの仕様は将来変わるかも
+  - 今どうにかするためのあれこれは以下を参照
+  - draft-ietf-mmusic-sdp-simulcast
+  - draft-ietf-mmusic-rid
 
 ### 3.8. Interactions With Forking
 
+- いくつかのSignalingシステムは、複数のエンドポイントに同じオファーを送る
+  - これをFolkingという
+  - Folkingには直列か並列かの種類がある
+- JSEPとしてはSignalingはスコープ外ではあるけど、影響もあるので触れる
+  - メディアをどの時点で送受信すればいいかとか
+
 #### 3.8.1. Sequential Forking
 
+- アクティブなセッションは常に1つ
+  - 先着1名様か、後勝ちか
+- 先着1名の場合、他のアンサーは拒否する
+  - SIP用語でACK+BYE
+- 後勝ちの場合は、いったんすべて`pranswer`として扱う
+  - 最後のを正式な`answer`とする
+
 #### 3.8.2. Parallel Forking
+
+- できるけど推奨してないし、ほとんどのSIPでもやってない
+- JSEPとしては、そういうことしたいなら複数の`PeerConnection`を作ってね
+  - RFC3960でいう`UPDATE`をやってもいい
 
 ## 4. Interface
 
