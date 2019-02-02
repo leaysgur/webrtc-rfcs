@@ -1772,11 +1772,11 @@ The SDP for |answer-B1| looks like:
    a=mid:d1
    a=sctp-port:5000
    a=max-message-size:65536
-
+```
 
    |answer-B1-candidate-1| looks like:
 
-
+```
    ufrag 7sFv
    index 0
    mid   a1
