@@ -405,23 +405,62 @@
 
 ## 5. SDP Interaction Procedures
 
+- SDPを作る・パースする方法について
+
 ### 5.1. Requirements Overview
+
+- オファー側もアンサー側もここにある手順に従ってね
 
 #### 5.1.1. Usage Requirements
 
+- 以下の仕様を満たしていなければエラーになる
+  - ICE: RFC84445
+    - もしかしたらICE-Liteがいるかもしれないがよしなにせよ
+  - DTLS: RFC6347 or DTLS-SRTP: RFC5763
+- SDESは使わない、DTLS-SRTPを使う
+
 #### 5.1.2. Profile Names and Interoperability
+
+- プロファイルが決まってる
+  - Media: `UDP/TLS/RTP/SAVPF`
+  - Data: `UDP/DTLS/SCTP`
+- でも実際はどれか欠けたりするのでよしなにせよ
+  - `TCP`とか使ったりするし
 
 ### 5.2. Constructing an Offer
 
+- `createOffer()`時にSDPをつくる
+- その手順についての詳細
+
 #### 5.2.1. Initial Offers
+
+- 最初の1回とそれ以外でアップデートする内容が違う
+- 最初なのでセッション全体に関する記述が必要
+  - `v=0`とか`o=`とか
+- 詳細は割愛
 
 #### 5.2.2. Subsequent Offers
 
+- 2回目以降、既に`localDescription`がある場合など
+- `setLocalDescription()`してる・してないで微妙に違う
+- 詳細は割愛
+
 #### 5.2.3. Options Handling
+
+- `createOffer()`の引数である`RTCOfferOptions`について
 
 ##### 5.2.3.1. IceRestart
 
+- `iceRestart`: `boolean`
+- 新しい`ufrag`と`pwd`を生成しなおす
+- もちろん初オファーの場合には意味がない
+
 ##### 5.2.3.2. VoiceActivityDetection
+
+- `voiceActivityDetection`: `boolean`
+- いわゆるDTX(DiscontinuousTransmission): 話してないときに帯域を節約する
+  - CN(ComfortNoise)対応のコーデックのとき
+- 実装されてなさそう
 
 ### 5.3. Generating an Answer
 
