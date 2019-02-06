@@ -368,17 +368,40 @@
 
 ### 4.2. RtpTransceiver
 
+- 本文なし
+
 #### 4.2.1. stop
+
+- `RTPTransceiver`を止める
+- 一度止めると、それに紐づく`m=`セクションに影響がある
 
 #### 4.2.2. stopped
 
+- 状態を表すフラグ
+- `stopped`が`true`なら、RTP/RTCPを送受信しない
+
 #### 4.2.3. setDirection
+
+- `direction`を変更するメソッド
+  - `recvonly`, `sendrecv`, `sendonly`, `inactive`のいずれか
+- Offer側では指定したものがそのままSDPに載る
+- 変えたら即そうなるのではなく、Answerが受理されてやっと変わる
 
 #### 4.2.4. direction
 
+- `direction`を表す
+
 #### 4.2.5. currentDirection
 
+- 現状の`direction`を表す
+  - `setDirection()`しても即変わらないので
+- リモート側で`recv`なら、こっちでは`send`のように反転される
+
 #### 4.2.6. setCodecPreferences
+
+- コーデックの設定ができる
+- あくまで希望の表明である
+  - 実装がないかもしれないので
 
 ## 5. SDP Interaction Procedures
 
