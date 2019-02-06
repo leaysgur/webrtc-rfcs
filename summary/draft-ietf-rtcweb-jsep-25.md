@@ -464,35 +464,95 @@
 
 ### 5.3. Generating an Answer
 
+- `createAnswer()`時にSDPをつくる
+- その手順についての詳細
+
 #### 5.3.1. Initial Answers
+
+- こちらも初回と以降で微妙に違う
+- `remoteDescription`がない状態では、`createAnswer()`できない
+- 詳細は割愛
 
 #### 5.3.2. Subsequent Answers
 
+- `setLocalDescription()`してる・してないで微妙に違う
+- 詳細は割愛
+
 #### 5.3.3. Options Handling
+
+- `createAnswer()`の引数である`RTCAnswerOptions`について
 
 ##### 5.3.3.1. VoiceActivityDetection
 
+- `voiceActivityDetection`: `boolean`
+- 実装されてなさそう
+
 ### 5.4. Modifying an Offer or Answer
+
+- `createOffer()`や`createAnswer()`で得たSDPは、修正してはいけない
+  - そのまま`setLocalDescription()`に渡す必要がある
+  - 修正したいものは`RtpTransceiver`のAPIや、それ用のオプションを使う
+- `setLocalDescription()`後、リモートに送るSDPは修正されるかもしれない
+  - いろいろな理由で
+  - 解釈される保証はないし、なんかあっても自己責任
 
 ### 5.5. Processing a Local Description
 
+- `setLocalDescription()`すると何が起きるか
+- 詳細は後述
+
 ### 5.6. Processing a Remote Description
+
+- `setRemoteDescription()`すると何が起きるか
+- 詳細は後述
 
 ### 5.7. Processing a Rollback
 
+- SDPのtype: `rollback`
+- `signalingState`を`stable`に戻す
+- `RtpTransceiver`と`m=`セクションの紐付けなど注意が必要
+
 ### 5.8. Parsing a Session Description
+
+- SDPは言うなればただのテキスト
+- これを内部的なオブジェクトに変換していく
+- なにかしらよくわからない行があればエラーにする
 
 #### 5.8.1. Session-Level Parsing
 
+- セッション全体のところ
+- 並びも固定になってる
+  - `a=`行は順不同
+- SDPの仕様にはあるけど、JSEPとしては見てないフィールドもたくさんある
+- 詳細は割愛
+
 #### 5.8.2. Media Section Parsing
+
+- `m=`セクションのこと
+- 詳細は割愛
 
 #### 5.8.3. Semantics Verification
 
+- パースが終わったSDPオブジェクトを検証するステップがある
+- 何かあったらエラーにする
+- 詳細は割愛
+
 ### 5.9. Applying a Local Description
+
+- `localDescription`を反映する
+  - ICEの`ufrag`と`pwd`が変わってたらICEをリスタートするとか
+- 詳細は割愛
 
 ### 5.10. Applying a Remote Description
 
+- `remoteDescription`を反映する
+  - `canTrickleIceCandidates`をアップデートしたり
+- 詳細は割愛
+
 ### 5.11. Applying an Answer
+
+- SDPが`pranswer`と`answer`だった場合、加えてこのステップが必要
+- 詳細は割愛
 
 ## 6. Processing RTP/RTCP
 
