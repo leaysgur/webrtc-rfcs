@@ -556,12 +556,40 @@
 
 ## 6. Processing RTP/RTCP
 
+- bundleするときは、その紐付けを`m=`セクションにマークする
+- そうすると、`RtpTransceiver`がRTP/RTCPを扱えるようになる
+
 ## 7. Examples
+
+- シチュエーション別のSDPの解説
+- SDPのサンプルがもっと欲しい場合: draft-ietf-rtcweb-sdp 
 
 ### 7.1. Simple Example
 
+- 最低限の動画・音声通話の例
+- Vanilla ICE
+
 ### 7.2. Detailed Example
+
+- より踏み込んだ例
+- Full Trickle ICE
+- `max-bundle`, `rtcpMuxPolicy`: `require`
+- TURN利用
+- 最初は音声とデータだけ、後から2本のビデオを一方通行で追加
 
 ### 7.3. Early Transport Warmup Example
 
+- 動画と音声を送るが、最初は`sendonly`で応答する
+  - あとから`sendrecv`にする
+  - こうすることで先に疎通を済ませておくことができるテクニック
+- `iceTransportPolicy`: `relay`
+
 ## 8. Security Considerations
+
+- セキュリティに関しては2つの文書がある
+  - draft-ietf-rtcweb-security-arch
+  - draft-ietf-rtcweb-security
+- JSの実行はユーザーに任されるので、間で何をされるかわからない
+  - `createOffer()`したSDPがそのまま`setLocalDescription()`されないかも
+  - なので固めの実装方針にして、エラーで落とすようにしてる
+- JSのAPIから触れない部分があることも知っておく
