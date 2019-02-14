@@ -1772,11 +1772,11 @@ The SDP for |answer-B1| looks like:
    a=mid:d1
    a=sctp-port:5000
    a=max-message-size:65536
-
+```
 
    |answer-B1-candidate-1| looks like:
 
-
+```
    ufrag 7sFv
    index 0
    mid   a1
@@ -1806,7 +1806,7 @@ The SDP for |answer-B1| looks like:
 The SDP for |offer-B2| is shown below.  In addition to the new m= sections for video, both of which are offering FEC, and one of which is offering simulcast, note the increment of the version number in the o= line, changes to the c= line, indicating the local candidate that was selected, and the inclusion of gathered candidates as a=candidate lines.
 
 
-````
+```
    v=0
    o=- 7729291447651054566 2 IN IP4 0.0.0.0
    s=-
