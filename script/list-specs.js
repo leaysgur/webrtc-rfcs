@@ -1,14 +1,24 @@
 const fs = require('fs');
 
-const specs = fs.readdirSync('./md/', { encoding: 'utf8' });
+const specs = fs.readdirSync('./md/', { encoding: 'utf8' })
+  .map(fname => {
+    const [name] = fname.split('.');
+    return {
+      name,
+      originalLink: `https://tools.ietf.org/html/${name}`,
+      markdownLink: `./md/${name}.md`,
+      summaryLink: `./summary/${name}.md`,
+    };
+  });
 
 const listMd = `
-## List
-
-${specs.map(fname => `- ${fname.split('.')[0]} [[md](./md/${fname}) | [summary](./summary/${fname})]`).join('\n')}
+## Spec list
+${specs.map(spec =>
+  `- ${spec.name}: [original](${spec.originalLink}) / [markdown](${spec.markdownLink}) / [summary](${spec.summaryLink})`
+).join('\n').trim()}
 `;
 
 const readMe = fs.readFileSync('./README.md', { encoding: 'utf8' });
-const [content] = readMe.split('## List');
+const [content] = readMe.split('## Spec list');
 
 fs.writeFileSync('./README.md', [content.trim(), listMd].join('\n'));
