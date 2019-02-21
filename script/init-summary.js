@@ -1,9 +1,10 @@
 const fs = require('fs');
 
 const [,, targetPath] = process.argv;
-const fileName = targetPath.split('/').pop();
+const fname = targetPath.split('/').pop();
+const [name] = fname.split('.');
 
-const md = fs.readFileSync(`./markdown/${fileName}`, { encoding: 'utf8' });
+const md = fs.readFileSync(`./markdown/${fname}`, { encoding: 'utf8' });
 
 const toc = [];
 for (const line of md.split('\n')) {
@@ -13,11 +14,12 @@ for (const line of md.split('\n')) {
 }
 
 const summary = `
-> [Read original](../md/${fileName})
+> [Read original](https://tools.ietf.org/html/${name})
+> [Read markdown](../markdown/${fname})
 
 ---
 
 ${toc.join('\n\n')}
 `.trim();
 
-fs.writeFileSync(`./summary/${fileName}`, summary);
+fs.writeFileSync(`./summary/${fname}`, summary);

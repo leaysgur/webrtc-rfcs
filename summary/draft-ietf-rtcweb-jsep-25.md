@@ -1,4 +1,5 @@
-> [Read original](../md/draft-ietf-rtcweb-jsep-25.md)
+> [Read original](https://tools.ietf.org/html/draft-ietf-rtcweb-jsep-25)
+> [Read markdown](../markdown/draft-ietf-rtcweb-jsep-25.md)
 
 ---
 
@@ -562,7 +563,7 @@
 ## 7. Examples
 
 - シチュエーション別のSDPの解説
-- SDPのサンプルがもっと欲しい場合: draft-ietf-rtcweb-sdp 
+- SDPのサンプルがもっと欲しい場合: draft-ietf-rtcweb-sdp
 
 ### 7.1. Simple Example
 
