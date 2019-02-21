@@ -1,5 +1,4 @@
-> [Read original](https://tools.ietf.org/html/draft-ietf-rtcweb-transports-17)
-> [Read summary](../summary/draft-ietf-rtcweb-transports-17.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-transports-17) / [summary](../summary/draft-ietf-rtcweb-transports-17.md)
 
 ---
 

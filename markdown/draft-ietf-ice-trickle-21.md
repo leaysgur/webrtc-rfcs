@@ -1,5 +1,4 @@
-> [Read original](https://tools.ietf.org/html/draft-ietf-ice-trickle-21)
-> [Read summary](../summary/draft-ietf-ice-trickle-21.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-ice-trickle-21) / [summary](../summary/draft-ietf-ice-trickle-21.md)
 
 ---
 

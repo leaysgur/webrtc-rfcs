@@ -1,5 +1,4 @@
-> [Read original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-02)
-> [Read summary](../summary/draft-ietf-rtcweb-mdns-ice-candidates-02.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-02) / [summary](../summary/draft-ietf-rtcweb-mdns-ice-candidates-02.md)
 
 ---
 
