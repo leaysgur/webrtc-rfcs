@@ -3,7 +3,7 @@ const fs = require('fs');
 const [,, targetPath] = process.argv;
 const fileName = targetPath.split('/').pop();
 
-const md = fs.readFileSync(`./md/${fileName}`, { encoding: 'utf8' });
+const md = fs.readFileSync(`./markdown/${fileName}`, { encoding: 'utf8' });
 
 const toc = [];
 for (const line of md.split('\n')) {

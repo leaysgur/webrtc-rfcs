@@ -1,12 +1,12 @@
 const fs = require('fs');
 
-const specs = fs.readdirSync('./md/', { encoding: 'utf8' })
+const specs = fs.readdirSync('./summary/', { encoding: 'utf8' })
   .map(fname => {
     const [name] = fname.split('.');
     return {
       name,
       originalLink: `https://tools.ietf.org/html/${name}`,
-      markdownLink: `./md/${name}.md`,
+      markdownLink: `./markdown/${name}.md`,
       summaryLink: `./summary/${name}.md`,
     };
   });
