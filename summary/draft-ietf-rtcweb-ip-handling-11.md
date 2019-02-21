@@ -1,5 +1,4 @@
-> [Read original](https://tools.ietf.org/html/draft-ietf-rtcweb-ip-handling-11)
-> [Read markdown](../markdown/draft-ietf-rtcweb-ip-handling-11.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-ip-handling-11) / [markdown](../markdown/draft-ietf-rtcweb-ip-handling-11.md)
 
 ---
 

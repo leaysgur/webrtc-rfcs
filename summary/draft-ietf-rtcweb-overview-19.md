@@ -1,5 +1,4 @@
-> [Read original](https://tools.ietf.org/html/draft-ietf-rtcweb-overview-19)
-> [Read markdown](../markdown/draft-ietf-rtcweb-overview-19.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-overview-19) / [markdown](../markdown/draft-ietf-rtcweb-overview-19.md)
 
 ---
 
