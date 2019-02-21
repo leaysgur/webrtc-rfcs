@@ -1,3 +1,8 @@
+> [Read original](https://tools.ietf.org/html/draft-ietf-rtcweb-ip-handling-11)
+> [Read summary](../summary/draft-ietf-rtcweb-ip-handling-11.md)
+
+---
+
 # WebRTC IP Address Handling Requirements
 
 ## 1. Introduction
