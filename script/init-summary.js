@@ -14,8 +14,7 @@ for (const line of md.split('\n')) {
 }
 
 const summary = `
-> [Read original](https://tools.ietf.org/html/${name})
-> [Read markdown](../markdown/${fname})
+> Read [original](https://tools.ietf.org/html/${name}) / [markdown](../markdown/${fname})
 
 ---
 
