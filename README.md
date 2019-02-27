@@ -5,7 +5,9 @@ WebRTC related RFCs that I have read through.
 - See [`/markdown`](./markdown) for Markdown formatted RFC.
 - See [`/summary`](./summary) for Japanese summary of each RFC.
 
-## Spec list
+## Specs
+
+A linked one means I've already read through.
 
 ### Overview: まずは全容を知ることから
 
@@ -74,7 +76,7 @@ WebRTC related RFCs that I have read through.
 - [RFC8421](./summary/RFC8421.md)
   - Guidelines for Multihomed and IPv4/IPv6 Dual-Stack ICE
   - candidateの優先度計算でIPv4とIPv6の違いをどう考慮するかについて
-- [RFC6544](./summary/RFC6544.md)
+- RFC6544
   - TCP Candidates with ICE
 - [RFC5389](./summary/RFC5389.md)
   - Session Traversal Utilities for NAT
@@ -82,25 +84,25 @@ WebRTC related RFCs that I have read through.
 - [RFC7064](./summary/RFC7064.md)
   - STUN URI Scheme for the STUN Protocol
   - STUNサーバーをURIで表すための`stun`と`stuns`について
-- [draft-ietf-tram-turnbis-21](./summary/draft-ietf-tram-turnbis-21.md)
+- draft-ietf-tram-turnbis-21
   - Traversal Using Relays around NAT (TURN): Relay Extensions to STUN
 
 ### SDP: どんなデータを流すのか
 
-- [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
+- draft-ietf-rtcweb-sdp-11
   - Annotated Example SDP for WebRTC
 - [RFC3264](./summary/RFC3264.md)
   - An Offer/Answer Model with the Session Description Protocol (SDP)
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
-- [RFC4566](./summary/RFC4566.md)
+- RFC4566
   - SDP: Session Description Protocol
-- [RFC5888](./summary/RFC5888.md)
+- RFC5888
   - The Session Description Protocol (SDP) Grouping Framework
-- [RFC5939](./summary/RFC5939.md)
+- RFC5939
   - Session Description Protocol (SDP) Capability Negotiation
-- [draft-ietf-mmusic-sdp-bundle-negotiation-54](./summary/draft-ietf-mmusic-sdp-bundle-negotiation-54.md)
+- draft-ietf-mmusic-sdp-bundle-negotiation-54
   - Negotiating Media Multiplexing Using the SDP
-- [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
+- draft-ietf-mmusic-msid-17
   - WebRTC MediaStream Identification in the Session Description Protocol
 
 ### セキュリティ
@@ -117,7 +119,9 @@ WebRTC related RFCs that I have read through.
 
 <details>
 
-> TODO: 精査
+---
+
+> Not yet maintained
 
 ### DTLS: すべてのP2P通信の土台
 
@@ -149,5 +153,7 @@ WebRTC related RFCs that I have read through.
   - WebRTC Data Channel Establishment Protocol
 - RFC4960
   - Stream Control Transmission Protocol
+
+---
 
 </details>
