@@ -226,10 +226,11 @@
   - なのでデフォルトは`0`
 - `bundlePolicy`: `balanced` or `max-compat` or `max-bundle`
   - draft-ietf-mmusic-sdp-bundle-negotiation にあるやつ
+  - メディア・データなどストリームをBUNDLEするかどうか
   - `balanced`: バランスを取る
   - `max-compat`: バンドルしない
   - `max-bundle`: 最初の`m=`セクションにすべてバンドルする
-  - デフォルトは`balanced`
+  - デフォルトは`balanced`（だが挙動は`max-bundle`がほとんどなはず）
 - `rtcpMuxPolicy`: `negotiate` or `require`
   - RTP/RTCPをmultiprexするかどうか
   - `negotiate`: 別々に候補を集めるけど、`a=rtcp-mux`もつける
@@ -573,7 +574,7 @@
 
 - より踏み込んだ例
 - Full Trickle ICE
-- `max-bundle`, `rtcpMuxPolicy`: `require`
+- `bundlePolicy: max-bundle`, `rtcpMuxPolicy: require`
 - TURN利用
 - 最初は音声とデータだけ、後から2本のビデオを一方通行で追加
 
