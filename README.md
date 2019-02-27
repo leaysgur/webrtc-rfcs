@@ -6,16 +6,148 @@ WebRTC related RFCs that I have read through.
 - See [`/summary`](./summary) for Japanese summary of each RFC.
 
 ## Spec list
-- draft-ietf-ice-trickle-21: [original](https://tools.ietf.org/html/draft-ietf-ice-trickle-21) / [markdown](./markdown/draft-ietf-ice-trickle-21.md) / [summary](./summary/draft-ietf-ice-trickle-21.md)
-- draft-ietf-rtcweb-ip-handling-11: [original](https://tools.ietf.org/html/draft-ietf-rtcweb-ip-handling-11) / [markdown](./markdown/draft-ietf-rtcweb-ip-handling-11.md) / [summary](./summary/draft-ietf-rtcweb-ip-handling-11.md)
-- draft-ietf-rtcweb-jsep-25: [original](https://tools.ietf.org/html/draft-ietf-rtcweb-jsep-25) / [markdown](./markdown/draft-ietf-rtcweb-jsep-25.md) / [summary](./summary/draft-ietf-rtcweb-jsep-25.md)
-- draft-ietf-rtcweb-mdns-ice-candidates-02: [original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-02) / [markdown](./markdown/draft-ietf-rtcweb-mdns-ice-candidates-02.md) / [summary](./summary/draft-ietf-rtcweb-mdns-ice-candidates-02.md)
-- draft-ietf-rtcweb-overview-19: [original](https://tools.ietf.org/html/draft-ietf-rtcweb-overview-19) / [markdown](./markdown/draft-ietf-rtcweb-overview-19.md) / [summary](./summary/draft-ietf-rtcweb-overview-19.md)
-- draft-ietf-rtcweb-transports-17: [original](https://tools.ietf.org/html/draft-ietf-rtcweb-transports-17) / [markdown](./markdown/draft-ietf-rtcweb-transports-17.md) / [summary](./summary/draft-ietf-rtcweb-transports-17.md)
-- rfc3264: [original](https://tools.ietf.org/html/rfc3264) / [markdown](./markdown/rfc3264.md) / [summary](./summary/rfc3264.md)
-- rfc5389: [original](https://tools.ietf.org/html/rfc5389) / [markdown](./markdown/rfc5389.md) / [summary](./summary/rfc5389.md)
-- rfc7064: [original](https://tools.ietf.org/html/rfc7064) / [markdown](./markdown/rfc7064.md) / [summary](./summary/rfc7064.md)
-- rfc7478: [original](https://tools.ietf.org/html/rfc7478) / [markdown](./markdown/rfc7478.md) / [summary](./summary/rfc7478.md)
-- rfc7675: [original](https://tools.ietf.org/html/rfc7675) / [markdown](./markdown/rfc7675.md) / [summary](./summary/rfc7675.md)
-- rfc8421: [original](https://tools.ietf.org/html/rfc8421) / [markdown](./markdown/rfc8421.md) / [summary](./summary/rfc8421.md)
-- rfc8445: [original](https://tools.ietf.org/html/rfc8445) / [markdown](./markdown/rfc8445.md) / [summary](./summary/rfc8445.md)
+
+### Overview: まずは全容を知ることから
+
+- [draft-ietf-rtcweb-overview-19](./summary/draft-ietf-rtcweb-overview-19.md)
+  - Overview: Real Time Protocols for Browser-based Applications
+  - そもそもの思想や全体像について
+- [RFC7478](./summary/RFC7478.md)
+  - Web Real-Time Communication Use Cases and Requirements
+  - WebRTCのユースケース実現に必要なコンポーネント実装に対する要求について
+- [draft-ietf-rtcweb-transports-17](./summary/draft-ietf-rtcweb-transports-17.md)
+  - Transports for WebRTC
+  - WebRTCで使ってるトランスポート、実装すべきプロトコルなどについて
+- [webrtc-nv-use-cases](https://w3c.github.io/webrtc-nv-use-cases/)
+  - WebRTC Next Version Use Cases
+  - 過去を踏まえてこれからのユースケースについて
+
+### JavaScript API: ブラウザで実際に使えるAPI
+- [draft-ietf-rtcweb-jsep-25](./summary/draft-ietf-rtcweb-jsep-25.md)
+  - JavaScript Session Establishment Protocol
+  - JavaScriptのAPI、各RFCとAPIがどう関係してるかなど実践的な全体像について
+- [webrtc-pc](https://w3c.github.io/webrtc-pc/)
+  - WebRTC 1.0: Real-time Communication Between Browsers
+  - `RTCPeerConnection`について
+- [webrtc-stats](https://w3c.github.io/webrtc-stats/)
+  - Identifiers for WebRTC's Statistics API
+  - `getStats()`について
+- [mediacapture-main](https://w3c.github.io/mediacapture-main/)
+  - Media Capture and Streams
+  - `MediaStream`と`getUserMedia()`について
+- [mediacapture-image](https://w3c.github.io/mediacapture-image/)
+  - MediaStream Image Capture
+  - `ImageCapture`について
+- [mediacapture-fromelement](https://w3c.github.io/mediacapture-fromelement/)
+  - Media Capture from DOM Elements
+  - `captureStream()`について
+- [mediacapture-record](https://w3c.github.io/mediacapture-record/)
+  - MediaStream Recording
+  - `MediaRecorder`について
+- [mediacapture-output](https://w3c.github.io/mediacapture-output/)
+  - Audio Output Devices API
+  - `sinkId`と`setSinkId()`について
+- [mediacapture-screen-share](https://w3c.github.io/mediacapture-screen-share/)
+  - Screen Capture
+  - `getDisplayMedia()`について
+- [webrtc-ice](https://w3c.github.io/webrtc-ice/)
+  - IceTransport Extensions for WebRTC
+  - `RTCIceTransport`について
+- [webrtc-quic](https://w3c.github.io/webrtc-quic/)
+  - QUIC API for Peer-to-peer Connections
+  - `RTCQuicTransport`について
+- [webrtc-quic/cs](https://w3c.github.io/webrtc-quic/cs.html)
+  - QUIC API for Client-to-Server Connections
+  - `RTCQuicStream`について
+
+### ICE: 通信経路が決まってからデータが流れる
+
+- [RFC8445](./summary/RFC8445.md)
+  - ICE: A Protocol for Network Address Translator (NAT) Traversal
+  - NATを越えて通信するためのプロトコルであるICEについて
+- [RFC7675](./summary/RFC7675.md)
+  - STUN Usage for Consent Freshness
+  - ICEのKeepAliveの代わりに行うConsentFreshnessという手順について
+- [draft-ietf-ice-trickle-21](./summary/draft-ietf-ice-trickle-21.md)
+  - Trickle ICE: Incremental Provisioning of Candidates for the ICE Protocol
+  - ICEのcandidateを送るタイミングを早めるTrickleというデファクトスタンダードな手法について
+- [RFC8421](./summary/RFC8421.md)
+  - Guidelines for Multihomed and IPv4/IPv6 Dual-Stack ICE
+  - candidateの優先度計算でIPv4とIPv6の違いをどう考慮するかについて
+- [RFC6544](./summary/RFC6544.md)
+  - TCP Candidates with ICE
+- [RFC5389](./summary/RFC5389.md)
+  - Session Traversal Utilities for NAT
+  - ICEの過程で使われるSTUNプロトコルについて
+- [RFC7064](./summary/RFC7064.md)
+  - STUN URI Scheme for the STUN Protocol
+  - STUNサーバーをURIで表すための`stun`と`stuns`について
+- [draft-ietf-tram-turnbis-21](./summary/draft-ietf-tram-turnbis-21.md)
+  - Traversal Using Relays around NAT (TURN): Relay Extensions to STUN
+
+### SDP: どんなデータを流すのか
+
+- [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
+  - Annotated Example SDP for WebRTC
+- [RFC3264](./summary/RFC3264.md)
+  - An Offer/Answer Model with the Session Description Protocol (SDP)
+  - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
+- [RFC4566](./summary/RFC4566.md)
+  - SDP: Session Description Protocol
+- [RFC5888](./summary/RFC5888.md)
+  - The Session Description Protocol (SDP) Grouping Framework
+- [RFC5939](./summary/RFC5939.md)
+  - Session Description Protocol (SDP) Capability Negotiation
+- [draft-ietf-mmusic-sdp-bundle-negotiation-54](./summary/draft-ietf-mmusic-sdp-bundle-negotiation-54.md)
+  - Negotiating Media Multiplexing Using the SDP
+- [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
+  - WebRTC MediaStream Identification in the Session Description Protocol
+
+### セキュリティ
+- [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
+  - WebRTC IP Address Handling Requirements
+  - P2Pするために集めたIPアドレスの扱いについて
+- [draft-ietf-rtcweb-mdns-ice-candidates-02](./summary/draft-ietf-rtcweb-mdns-ice-candidates-02.md)
+  - Using Multicast DNS to protect privacy when exposing ICE candidates
+  - プライベートIPの代わりにmDNSで登録した名前を使う提案について
+- draft-ietf-rtcweb-security-10
+  - Security Considerations for WebRTC
+- draft-ietf-rtcweb-security-arch-17
+  - WebRTC Security Architecture
+
+<details>
+
+> TODO: 精査
+
+### DTLS: すべてのP2P通信の土台
+
+- RFC6347
+  - Datagram Transport Layer Security Version 1.2
+- RFC5764
+  - DTLS Extension to Establish Keys for the SRTP
+- RFC7983
+  - Multiplexing Scheme Updates for DTLS-SRTP
+
+### MediaChannel: RTPとそのコーデック
+
+- RFC3550
+  - RTP: A Transport Protocol for Real-Time Applications
+- RFC3711
+  - The Secure Real-time Transport Protocol (SRTP)
+- draft-ietf-rtcweb-rtp-usage-26
+  - WebRTC Media Transport and Use of RTP
+- RFC7742
+  - WebRTC Video Processing and Codec Requirements
+- RFC7874
+  - WebRTC Audio Processing and Codec Requirements
+
+### DataChannel: SCTPとそのラッパー
+
+- draft-ietf-rtcweb-data-channel-13
+  - WebRTC Data Channels
+- draft-ietf-rtcweb-data-protocol-09
+  - WebRTC Data Channel Establishment Protocol
+- RFC4960
+  - Stream Control Transmission Protocol
+
+</details>
