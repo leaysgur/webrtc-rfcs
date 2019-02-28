@@ -62,7 +62,7 @@ A linked one means I've already read through.
   - QUIC API for Client-to-Server Connections
   - `RTCQuicStream`について
 
-### ICE: 通信経路が決まってからデータが流れる
+### ICE: セッションを確立する通信経路を探す
 
 - [RFC8445](./summary/RFC8445.md)
   - ICE: A Protocol for Network Address Translator (NAT) Traversal
@@ -87,7 +87,7 @@ A linked one means I've already read through.
 - draft-ietf-tram-turnbis-21
   - Traversal Using Relays around NAT (TURN): Relay Extensions to STUN
 
-### SDP: どんなデータを流すのか
+### SDP: どんなセッションを確立したいのか
 
 - [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
   - Annotated Example SDP for WebRTC
@@ -117,13 +117,13 @@ A linked one means I've already read through.
   - Forward Error Correction Grouping Semantics in the SDP
 
 
-### セキュリティ
+### セキュリティ関連
 - [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
   - WebRTC IP Address Handling Requirements
   - P2Pするために集めたIPアドレスの扱いについて
 - [draft-ietf-rtcweb-mdns-ice-candidates-02](./summary/draft-ietf-rtcweb-mdns-ice-candidates-02.md)
   - Using Multicast DNS to protect privacy when exposing ICE candidates
-  - プライベートIPの代わりにmDNSで登録した名前を使う提案について
+  - プライバシー保護のためにプライベートIPの代わりにmDNSの登録名を使う提案について
 - draft-ietf-rtcweb-security-10
   - Security Considerations for WebRTC
 - draft-ietf-rtcweb-security-arch-17
