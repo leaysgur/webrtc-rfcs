@@ -109,8 +109,9 @@ A linked one means I've already read through.
   - The Session Description Protocol (SDP) Grouping Framework
 - RFC5939
   - Session Description Protocol (SDP) Capability Negotiation
-- draft-ietf-mmusic-msid-17
+- [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
   - WebRTC MediaStream Identification in the Session Description Protocol
+  - SDPとMediaStream/MediaStreamTrackを紐付ける`a=msid:`行について
 - RFC4588
   - RTP Retransmission Payload Format
 - RFC5956
