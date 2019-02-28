@@ -89,21 +89,33 @@ A linked one means I've already read through.
 
 ### SDP: どんなデータを流すのか
 
-- draft-ietf-rtcweb-sdp-11
+- [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
   - Annotated Example SDP for WebRTC
+  - WebRTCで実際に使われるSDPのサンプルについて
 - [RFC3264](./summary/RFC3264.md)
   - An Offer/Answer Model with the Session Description Protocol (SDP)
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
 - RFC4566
   - SDP: Session Description Protocol
+- RFC8122
+  - Connection-Oriented Media Transport over the TLS Protocol in the SDP
+- draft-ietf-mmusic-mux-exclusive-12
+  - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
+- RFC5761
+  - Multiplexing RTP Data and Control Packets on a Single Port
+- draft-ietf-mmusic-sdp-bundle-negotiation-54
+  - Negotiating Media Multiplexing Using the SDP
 - RFC5888
   - The Session Description Protocol (SDP) Grouping Framework
 - RFC5939
   - Session Description Protocol (SDP) Capability Negotiation
-- draft-ietf-mmusic-sdp-bundle-negotiation-54
-  - Negotiating Media Multiplexing Using the SDP
 - draft-ietf-mmusic-msid-17
   - WebRTC MediaStream Identification in the Session Description Protocol
+- RFC4588
+  - RTP Retransmission Payload Format
+- RFC5956
+  - Forward Error Correction Grouping Semantics in the SDP
+
 
 ### セキュリティ
 - [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
