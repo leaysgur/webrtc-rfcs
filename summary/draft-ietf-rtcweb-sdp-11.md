@@ -117,38 +117,93 @@
 
 ### 5.3. MultiResolution, RTX, FEC Examples
 
+- サイマルキャストなどマルチストリームの場合の例
+- RTXとかFECとか
+
 #### 5.3.1. Sendonly Simulcast Session with 2 cameras and 2 encodings per camera
+
+- 1つの音声2つの動画
+- 動画は解像度が2つずつ
+  - VP8とH264
+- この1 + 4RTPストリームをすべてBUNDLEする
 
 #### 5.3.2. Successful SVC Video Session
 
+- H264-SVCを選んで返す例
+
 #### 5.3.3. Successful Simulcast Video Session with Retransmission
+
+- RTXで多重化する例
 
 #### 5.3.4. Successful 1-way Simulcast Session with 2 resolutions and RTX -One resolution rejected
 
+- RTXで多重化して2本送るけど1つは拒否される例
+
 #### 5.3.5. Simulcast Video Session with Forward Error Correction
+
+- FECを使う例
 
 ### 5.4. Others
 
+- それ以外のユースケース例
+- RTPヘッダの拡張を使うやつとか
+
 #### 5.4.1. Audio Session - Voice Activity Detection
+
+- RTPの拡張でVADする例
 
 #### 5.4.2. Audio Conference - Voice Activity Detection
 
+- 同じくRTPの拡張でVADする例（ルーム）
+
 #### 5.4.3. Successful legacy Interop Fallback with bundle-only
+
+- レガシーVoIP環境とつなげる例
+- 片や`bundle-only`で動画と音声をオファー
+- 片やそれを無視して音声のみでつながる
 
 #### 5.4.4. Legacy Interop with RTP/AVP profile
 
+- 少し古いプロファイルであるAVPを使う例
+- もちろんつながる
+
 ## 6. IANA Considerations
+
+- IANAは関係なし
 
 ## 7. Security Considerations
 
+- 別の仕様があるのでそれを参照
+  - draft-ietf-rtcweb-security-arch
+- SDPにはプライベートな情報が含まれるので、TLSなど暗号化が使われる
+
 ## 8. Acknowledgments
+
+- 謝辞
 
 ## Appendix A. Appendix
 
+- 本文なし
+
 ### A.1. JSEP SDP Attributes Checklist
+
+- SDPの文法が正しいかを調べるためのチェックリスト
 
 #### A.1.1. Common Checklist
 
+- SDPのフォーマットについての決まりごと
+  - `v=0`からはじまるとか
+  - `s=-`は絶対に3行目とか
+
 #### A.1.2. RTP Media Description Checklist
 
+- RTPに関する記述のチェックリスト
+  - JSEPでは`UDP/TLS/RTP/SAVPF`をプロトコルに指定するとか
+  - `SAVPF`だけでなく、`S?AVPF?`をもれなくサポートせよとか
+  - `a=group:LS`は`mid`と必ずセットにするとか
+
 #### A.1.3. DataChannel Media Description checklist
+
+- DataChannelのSDPのためのチェックリスト
+  - タイプは`application`
+  - `UDP/DTLS/SCTP`がプロトコル
