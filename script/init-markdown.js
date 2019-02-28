@@ -11,3 +11,4 @@ const md = `
 `.trim();
 
 fs.writeFileSync(`./markdown/${name}.md`, md);
+console.log(`./markdown/${name}.md`, 'created.');

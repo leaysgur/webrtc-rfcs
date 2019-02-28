@@ -22,3 +22,5 @@ ${toc.join('\n\n')}
 `.trim();
 
 fs.writeFileSync(`./summary/${fname}`, summary);
+console.log(`./summary/${fname}`, 'created.');
+
