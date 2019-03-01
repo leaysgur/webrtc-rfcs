@@ -95,8 +95,9 @@ A linked one means I've already read through.
 - [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the Session Description Protocol (SDP)
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
-- [RFC4566](./summary/rfc4556.md);
+- [RFC4566](./summary/rfc4556.md)
   - SDP: Session Description Protocol
+  - WebRTC以前からあるSDPの基本について
 - draft-roach-mmusic-unified-plan-00
   - A Unified Plan for Using SDP with Large Numbers of Media Flows
 - RFC8122
