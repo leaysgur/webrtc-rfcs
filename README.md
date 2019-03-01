@@ -14,7 +14,7 @@ A linked one means I've already read through.
 - [draft-ietf-rtcweb-overview-19](./summary/draft-ietf-rtcweb-overview-19.md)
   - Overview: Real Time Protocols for Browser-based Applications
   - そもそもの思想や全体像について
-- [RFC7478](./summary/RFC7478.md)
+- [RFC7478](./summary/rfc7478.md)
   - Web Real-Time Communication Use Cases and Requirements
   - WebRTCのユースケース実現に必要なコンポーネント実装に対する要求について
 - [draft-ietf-rtcweb-transports-17](./summary/draft-ietf-rtcweb-transports-17.md)
@@ -64,24 +64,24 @@ A linked one means I've already read through.
 
 ### ICE: セッションを確立する通信経路を探す
 
-- [RFC8445](./summary/RFC8445.md)
+- [RFC8445](./summary/rfc8445.md)
   - ICE: A Protocol for Network Address Translator (NAT) Traversal
   - NATを越えて通信するためのプロトコルであるICEについて
-- [RFC7675](./summary/RFC7675.md)
+- [RFC7675](./summary/rfc7675.md)
   - STUN Usage for Consent Freshness
   - ICEのKeepAliveの代わりに行うConsentFreshnessという手順について
 - [draft-ietf-ice-trickle-21](./summary/draft-ietf-ice-trickle-21.md)
   - Trickle ICE: Incremental Provisioning of Candidates for the ICE Protocol
   - ICEのcandidateを送るタイミングを早めるTrickleというデファクトスタンダードな手法について
-- [RFC8421](./summary/RFC8421.md)
+- [RFC8421](./summary/rfc8421.md)
   - Guidelines for Multihomed and IPv4/IPv6 Dual-Stack ICE
   - candidateの優先度計算でIPv4とIPv6の違いをどう考慮するかについて
 - RFC6544
   - TCP Candidates with ICE
-- [RFC5389](./summary/RFC5389.md)
+- [RFC5389](./summary/rfc5389.md)
   - Session Traversal Utilities for NAT
   - ICEの過程で使われるSTUNプロトコルについて
-- [RFC7064](./summary/RFC7064.md)
+- [RFC7064](./summary/rfc7064.md)
   - STUN URI Scheme for the STUN Protocol
   - STUNサーバーをURIで表すための`stun`と`stuns`について
 - draft-ietf-tram-turnbis-21
@@ -92,10 +92,10 @@ A linked one means I've already read through.
 - [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
   - Annotated Example SDP for WebRTC
   - WebRTCで実際に使われるSDPのサンプルについて
-- [RFC3264](./summary/RFC3264.md)
+- [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the Session Description Protocol (SDP)
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
-- RFC4566
+- [RFC4566](./summary/rfc4556.md);
   - SDP: Session Description Protocol
 - draft-roach-mmusic-unified-plan-00
   - A Unified Plan for Using SDP with Large Numbers of Media Flows
