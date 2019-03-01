@@ -97,6 +97,8 @@ A linked one means I've already read through.
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
 - RFC4566
   - SDP: Session Description Protocol
+- draft-roach-mmusic-unified-plan-00
+  - A Unified Plan for Using SDP with Large Numbers of Media Flows
 - RFC8122
   - Connection-Oriented Media Transport over the TLS Protocol in the SDP
 - draft-ietf-mmusic-mux-exclusive-12
@@ -113,7 +115,7 @@ A linked one means I've already read through.
   - Session Description Protocol (SDP) Capability Negotiation
 - [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
   - WebRTC MediaStream Identification in the Session Description Protocol
-  - SDPとMediaStream/MediaStreamTrackを紐付ける`a=msid:`行について
+  - SDPとMediaStream(Track)を紐付けるメディアレベルの`a=msid:`行について
 - RFC4588
   - RTP Retransmission Payload Format
 - RFC5956
