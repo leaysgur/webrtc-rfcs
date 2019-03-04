@@ -155,15 +155,50 @@
 
 ### 3.4. Glare Minimization
 
+- グレアを徹底的に回避するために
+- `m=`セクションを独立して変更可能にする
+  - 部分オファーと部分アンサー
+- 各`m=`セクションが`a=mid`属性を持ってる必要がある
+  - RFC5888
+- SDPの`type`に`partialOffer`や`partialAnswer`を定義する
+  - `sdp`自体には、差分だけが入る
+- ということを構想している段階
+
 #### 3.4.1. Adding a Stream
+
+- ストリームの追加
+- まだ使われていない新たな`mid`を使う
+- 非同期で複数の部分オファーを受信したら
+  - `mid`の小さい順に追加する
+- `o=`行ののバージョンをインクリメントしてアンサーを発行する
 
 #### 3.4.2. Changing a Stream
 
+- ストリームの変更
+- `mid`が同じものを変更する
+- `o=`行ののバージョンをインクリメントしてアンサーを発行する
+
 #### 3.4.3. Removing a Stream
+
+- ストリームの削除
+- 該当の`mid`のセクションに`a=inactive`をつける
 
 ### 3.5. Negotiation of Stream Ordinality
 
+- オファー側から、アンサー側が何本のストリームを望んでいるかはわからない
+  - たとえばカンファレンスアプリで、8本の配信がある場合
+  - 視聴側はとりあえず1本だけオファーを出してみて
+  - 配信側はその1本に対してアンサーしつつ、8本のオファーも出す
+  - それに対して改めて8本のアンサーを返す
+- この3wayハンドシェイクでやり取りできる
+  - それ用のシグナリング手段で事前に解消する手もある
+
 ### 3.6. Compatibility with Legacy uses
+
+- レガシーなクライアントとの互換性について
+- `a=bundle-only`の扱いだけが問題
+  - レガシーな環境はそれを無視するはず
+- なのでどのストリームが重要なのかを決めることが重要
 
 ## 4. Examples
 
@@ -172,14 +207,35 @@
 
 ### 4.1. Simple example with one audio and one video
 
+- 1音声1動画のSDP例
+- アンサー側はBUNDLEも`rtcp-mux`もサポートしていない
+
 ### 4.2. Multiple Videos
+
+- 1音声2動画のSDP例
+- `bundle-only`ではない
 
 ### 4.3. Many Videos
 
+- 1音声3動画のSDP例
+- `bundle-only`で、ペイロードタイプも重複している
+
 ### 4.4. Multiple Videos with Simulcast
+
+- 1音声2動画（解像度2つ）のSDP例
+- VP8とH.264を`bundle-only`で送る
 
 ### 4.5. Video with Simulcast and RTX
 
+- 1音声1動画（解像度2つ）のSDP例
+- RTX対応
+
 ### 4.6. Video with Simulcast and FEC
 
+- 1動画1音声（解像度2つ）のSDP例
+- FEC対応
+
 ### 4.7. Video with Layered Coding
+
+- 1音声1動画（解像度3つ）
+  - RFC5583にあるやり方
