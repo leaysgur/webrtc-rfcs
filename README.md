@@ -7,7 +7,7 @@ WebRTC related RFCs that I have read through.
 
 ## Specs
 
-A linked one means I've already read through.
+Linked means I've already read through.
 
 ### Overview: まずは全容を知ることから
 
@@ -16,15 +16,16 @@ A linked one means I've already read through.
   - そもそもの思想や全体像について
 - [RFC7478](./summary/rfc7478.md)
   - Web Real-Time Communication Use Cases and Requirements
-  - WebRTCのユースケース実現に必要なコンポーネント実装に対する要求について
+  - WebRTCのユースケースと、その実現に必要なコンポーネント、実装に対する要求について
 - [draft-ietf-rtcweb-transports-17](./summary/draft-ietf-rtcweb-transports-17.md)
   - Transports for WebRTC
-  - WebRTCで使ってるトランスポート、実装すべきプロトコルなどについて
+  - WebRTCで使用しているトランスポートや実装すべきプロトコルについて
 - [webrtc-nv-use-cases](https://w3c.github.io/webrtc-nv-use-cases/)
   - WebRTC Next Version Use Cases
-  - 過去を踏まえてこれからのユースケースについて
+  - 過去を踏まえたこれからのWebRTCのユースケースについて
 
 ### JavaScript API: ブラウザで実際に使えるAPI
+
 - [draft-ietf-rtcweb-jsep-25](./summary/draft-ietf-rtcweb-jsep-25.md)
   - JavaScript Session Establishment Protocol
   - JavaScriptのAPI、各RFCとAPIがどう関係してるかなど実践的な全体像について
@@ -92,29 +93,27 @@ A linked one means I've already read through.
 - [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
   - Annotated Example SDP for WebRTC
   - WebRTCで実際に使われるSDPのサンプルについて
-- [RFC3264](./summary/rfc3264.md)
-  - An Offer/Answer Model with the Session Description Protocol (SDP)
-  - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
 - [RFC4566](./summary/rfc4556.md)
   - SDP: Session Description Protocol
   - WebRTC以前からあるSDPの基本について
+- [RFC3264](./summary/rfc3264.md)
+  - An Offer/Answer Model with the Session Description Protocol (SDP)
+  - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
+- RFC8122
+  - Connection-Oriented Media Transport over the TLS Protocol in the SDP
 - [draft-roach-mmusic-unified-plan-00](./summary/draft-roach-mmusic-unified-plan-00.md)
   - A Unified Plan for Using SDP with Large Numbers of Media Flows
   - 複数のメディアをSDPにどう記述するかを定めたUnifiedPlanの基本の考え方について
-- RFC8122
-  - Connection-Oriented Media Transport over the TLS Protocol in the SDP
-- draft-ietf-mmusic-mux-exclusive-12
-  - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
-- RFC5761
-  - Multiplexing RTP Data and Control Packets on a Single Port
-- draft-ietf-mmusic-sdp-bundle-negotiation-54
-  - Negotiating Media Multiplexing Using the SDP
 - RFC5576
   - Source-Specific Media Attributes in the SDP
+- RFC5761
+  - Multiplexing RTP Data and Control Packets on a Single Port
+- draft-ietf-mmusic-mux-exclusive-12
+  - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
 - RFC5888
   - The Session Description Protocol (SDP) Grouping Framework
-- RFC5939
-  - Session Description Protocol (SDP) Capability Negotiation
+- draft-ietf-mmusic-sdp-bundle-negotiation-54
+  - Negotiating Media Multiplexing Using the SDP
 - [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
   - WebRTC MediaStream Identification in the Session Description Protocol
   - SDPとMediaStream(Track)を紐付けるメディアレベルの`a=msid:`行について
@@ -122,7 +121,6 @@ A linked one means I've already read through.
   - RTP Retransmission Payload Format
 - RFC5956
   - Forward Error Correction Grouping Semantics in the SDP
-
 
 ### セキュリティ関連
 - [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
