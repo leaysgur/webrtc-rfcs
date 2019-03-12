@@ -107,8 +107,9 @@ Linked means I've already read through.
 - [RFC5576](./summary/rfc5576.md)
   - Source-Specific Media Attributes in the SDP
   - RTPのSSRCとの関連を表すソースレベルの`a=ssrc`行について
-- RFC5761
+- [RFC5761](./summary/rfc5761.md)
   - Multiplexing RTP Data and Control Packets on a Single Port
+  - RTPとRTCPを多重化するメディアレベルの`a=rtcp-mux`行について
 - draft-ietf-mmusic-mux-exclusive-12
   - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
 - RFC5888
