@@ -112,14 +112,14 @@ Linked means I've already read through.
   - RTPとRTCPを多重化するメディアレベルの`a=rtcp-mux`行について
 - [draft-ietf-mmusic-mux-exclusive-12](./summary/draft-ietf-mmusic-mux-exclusive-12.md)
   - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
-  - RTPとRTCPを多重化を強制するメディアレベルの`a=rtcp-mux-only`行について
+  - RTPとRTCPの多重化を強制するメディアレベルの`a=rtcp-mux-only`行について
 - RFC5888
   - The Session Description Protocol (SDP) Grouping Framework
 - draft-ietf-mmusic-sdp-bundle-negotiation-54
   - Negotiating Media Multiplexing Using the SDP
 - [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
   - WebRTC MediaStream Identification in the Session Description Protocol
-  - SDPとMediaStream(Track)を紐付けるメディアレベルの`a=msid:`行について
+  - SDPとMediaStream(Track)を紐付けるメディアレベルの`a=msid`行について
 - RFC4588
   - RTP Retransmission Payload Format
 - RFC5956
