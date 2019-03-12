@@ -110,8 +110,9 @@ Linked means I've already read through.
 - [RFC5761](./summary/rfc5761.md)
   - Multiplexing RTP Data and Control Packets on a Single Port
   - RTPとRTCPを多重化するメディアレベルの`a=rtcp-mux`行について
-- draft-ietf-mmusic-mux-exclusive-12
+- [draft-ietf-mmusic-mux-exclusive-12](./summary/draft-ietf-mmusic-mux-exclusive-12.md)
   - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
+  - RTPとRTCPを多重化を強制するメディアレベルの`a=rtcp-mux-only`行について
 - RFC5888
   - The Session Description Protocol (SDP) Grouping Framework
 - draft-ietf-mmusic-sdp-bundle-negotiation-54
