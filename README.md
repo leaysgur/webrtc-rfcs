@@ -104,6 +104,8 @@ Linked means I've already read through.
 - [draft-roach-mmusic-unified-plan-00](./summary/draft-roach-mmusic-unified-plan-00.md)
   - A Unified Plan for Using SDP with Large Numbers of Media Flows
   - 複数のメディアをSDPにどう記述するかを定めたUnifiedPlanの基本の考え方について
+- RFC5506
+  - Support for Reduced-Size RTCP: Opportunities and Consequences
 - [RFC5576](./summary/rfc5576.md)
   - Source-Specific Media Attributes in the SDP
   - RTPのSSRCとの関連を表すソースレベルの`a=ssrc`行について
