@@ -99,6 +99,8 @@ Linked means I've already read through.
 - [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the Session Description Protocol (SDP)
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
+- RFC8122
+  - Connection-Oriented Media Transport over the TLS Protocol in the SDP
 - [RFC5506](./summary/rfc5506.md)
   - Support for Reduced-Size RTCP: Opportunities and Consequences
   - Reduced-Size RTCPの使用を意味する`a=rtcp-rsize`行について
@@ -108,8 +110,6 @@ Linked means I've already read through.
 - [draft-ietf-mmusic-mux-exclusive-12](./summary/draft-ietf-mmusic-mux-exclusive-12.md)
   - Indicating Exclusive Support of RTP/RTCP Multiplexing using SDP
   - RTPとRTCPの多重化を強制するメディアレベルの`a=rtcp-mux-only`行について
-- RFC8122
-  - Connection-Oriented Media Transport over the TLS Protocol in the SDP
 - [draft-roach-mmusic-unified-plan-00](./summary/draft-roach-mmusic-unified-plan-00.md)
   - A Unified Plan for Using SDP with Large Numbers of Media Flows
   - 複数のメディアをSDPにどう記述するかを定めたUnifiedPlanの基本の考え方について
