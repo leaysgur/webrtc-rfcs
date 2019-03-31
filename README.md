@@ -109,7 +109,7 @@ Linked means I've already read through.
   - Framework for Establishing a SRTP Security Context Using DTLS
 - [RFC5506](./summary/rfc5506.md)
   - Support for Reduced-Size RTCP: Opportunities and Consequences
-  - Reduced-Size RTCPの使用を意味する`a=rtcp-rsize`行について
+  - 通常のRTCPの複合パケットとは別で送られるReduced-Size RTCPの使用を意味する`a=rtcp-rsize`行について
 - [RFC5761](./summary/rfc5761.md)
   - Multiplexing RTP Data and Control Packets on a Single Port
   - RTPとRTCPを多重化するメディアレベルの`a=rtcp-mux`行について
