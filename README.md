@@ -123,8 +123,9 @@ Linked means I've already read through.
 - [RFC5576](./summary/rfc5576.md)
   - Source-Specific Media Attributes in the SDP
   - RTPのSSRCとの関連を表すソースレベルの`a=ssrc`行について
-- RFC5888
+- [RFC5888](./summary/rfc5888.md)
   - The Session Description Protocol (SDP) Grouping Framework
+  - メディアをグルーピングできるセッションレベルの`a=group`属性とメディアレベルの`a=mid`属性について
 - draft-ietf-mmusic-sdp-bundle-negotiation-54
   - Negotiating Media Multiplexing Using the SDP
 - [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
