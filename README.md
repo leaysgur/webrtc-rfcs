@@ -26,7 +26,7 @@ Linked means I've already read through.
 
 ### JavaScript API: ブラウザで実際に使えるAPI
 
-- [draft-ietf-rtcweb-jsep-25](./summary/draft-ietf-rtcweb-jsep-25.md)
+- [draft-ietf-rtcweb-jsep-26](./summary/draft-ietf-rtcweb-jsep-26.md)
   - JavaScript Session Establishment Protocol
   - JavaScriptのAPI、各RFCとAPIがどう関係してるかなど実践的な全体像について
 - [webrtc-pc](https://w3c.github.io/webrtc-pc/)

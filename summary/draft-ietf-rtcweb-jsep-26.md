@@ -423,8 +423,9 @@
 #### 5.1.2. Profile Names and Interoperability
 
 - プロファイルが決まってる
-  - Media: `UDP/TLS/RTP/SAVPF`
-  - Data: `UDP/DTLS/SCTP`
+  - Media: `UDP/DTLS/RTP/SAVPF` OR `TCP/DTLS/RTP/SAVPF`
+  - Data: `UDP/DTLS/SCTP` OR `TCP/DTLS/SCTP`
+  - どれになるかは、ICEのcandidateで決定する
 - でも実際はどれか欠けたりするのでよしなにせよ
   - `TCP`とか使ったりするし
 
