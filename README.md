@@ -102,6 +102,8 @@ Linked means I've already read through.
 - [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the SDP
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
+- draft-ietf-mmusic-ice-sip-sdp-24
+  - SDP Offer/Answer procedures for ICE
 - [RFC4145](./summary/rfc4145.md)
   - TCP-Based Media Transport in the SDP
   - 元々はTCPのコネクションを確立するための`a=setup`行の成り立ちについて
@@ -147,11 +149,11 @@ Linked means I've already read through.
 - draft-ietf-rtcweb-security-arch-17
   - WebRTC Security Architecture
 
+### Not yet maintained
+
 <details>
 
 ---
-
-> Not yet maintained
 
 ### DTLS: すべてのP2P通信の土台
 
@@ -160,7 +162,7 @@ Linked means I've already read through.
 - RFC5764
   - DTLS Extension to Establish Keys for the SRTP
 - RFC7983
-  - Multiplexing Scheme Updates for DTLS-SRTP
+  - Multiplexing Scheme Updates for SRTP Extension for DTLS
 
 ### MediaChannel: RTPとその拡張、コーデック
 
