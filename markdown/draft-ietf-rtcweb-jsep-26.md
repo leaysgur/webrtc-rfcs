@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-jsep-25) / [summary](../summary/draft-ietf-rtcweb-jsep-25.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-jsep-26) / [summary](../summary/draft-ietf-rtcweb-jsep-26.md)
 
 ---
 
@@ -559,9 +559,9 @@ The SDES SRTP keying mechanism from [RFC4568] MUST NOT be used, as discussed in 
 
 #### 5.1.2. Profile Names and Interoperability
 
-For media m= sections, JSEP implementations MUST support the "UDP/TLS/RTP/SAVPF" profile specified in [RFC5764], and MUST indicate this profile for each media m= line they produce in an offer.  For data m= sections, implementations MUST support the "UDP/DTLS/SCTP" profile and MUST indicate this profile for each data m= line they produce in an offer.  Although these profiles are formally associated with UDP, ICE can select either UDP [RFC8445] or TCP [RFC6544] transport depending on network conditions, even when advertising a UDP profile.
+For media m= sections, JSEP implementations MUST support the "UDP/TLS/RTP/SAVPF" profile specified in [RFC5764] as well as the "TCP/DTLS/RTP/SAVPF" profile specified in [RFC7850], and MUST indicate one of these profiles for each media m= line they produce in an offer.  For data m= sections, implementations MUST support the "UDP/DTLS/SCTP" profile as well as the "TCP/DTLS/SCTP" profile, and MUST indicate one of these profiles for each data m= line they produce in an offer.  The exact profile to use is determined by the protocol associated with the current default or selected ICE candidate, as described in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.2.1.2.
 
-Unfortunately, in an attempt at compatibility, some endpoints generate other profile strings even when they mean to support one of these profiles.  For instance, an endpoint might generate "RTP/AVP" but supply "a=fingerprint" and "a=rtcp-fb" attributes, indicating its willingness to support "UDP/TLS/RTP/SAVPF" or "TCP/TLS/RTP/SAVPF". In order to simplify compatibility with such endpoints, JSEP implementations MUST follow the following rules when processing the media m= sections in a received offer:
+Unfortunately, in an attempt at compatibility, some endpoints generate other profile strings even when they mean to support one of these profiles.  For instance, an endpoint might generate "RTP/AVP" but supply "a=fingerprint" and "a=rtcp-fb" attributes, indicating its willingness to support "UDP/TLS/RTP/SAVPF" or "TCP/DTLS/RTP/SAVPF". In order to simplify compatibility with such endpoints, JSEP implementations MUST follow the following rules when processing the media m= sections in a received offer:
 
 *  Any profile in the offer matching one of the following MUST be accepted:
 
@@ -745,7 +745,7 @@ If the previous offer was applied using setLocalDescription, but a corresponding
 
 *  For RtpTransceivers that are not stopped, the "a=msid" line(s) MUST stay the same if they are present in the current description, regardless of changes to the transceiver's direction or track.  If no "a=msid" line is present in the current description, "a=msid" line(s) MUST be generated according to the same rules as for an initial offer.
 
-*  Each "m=" and c=" line MUST be filled in with the port, protocol, and address of the default candidate for the m= section, as described in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.2.1.2.  If ICE checking has already completed for one or more candidate pairs and a candidate pair is in active use, then that pair MUST be used, even if ICE has not yet completed.  Note that this differs from the guidance in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.3.4, which only refers to offers created when ICE has completed.  In each case, if no RTP candidates have yet been gathered, dummy values MUST be used, as described above.
+*  Each "m=" and c=" line MUST be filled in with the port, relevant RTP profile, and address of the default candidate for the m= section, as described in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.2.1.2, and clarified in Section 5.1.2.  If no RTP candidates have yet been gathered, dummy values MUST still be used, as described above.
 
 *  Each "a=mid" line MUST stay the same.
 
@@ -974,7 +974,7 @@ If any session description was previously supplied to setLocalDescription, an an
 
 *  The "s=" and "t=" lines MUST stay the same.
 
-*  Each "m=" and c=" line MUST be filled in with the port and address of the default candidate for the m= section, as described in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.2.1.2.  Note, however, that the m= line protocol need not match the default candidate, because this protocol value must instead match what was supplied in the offer, as described above.
+*  Each "m=" and c=" line MUST be filled in with the port and address of the default candidate for the m= section, as described in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.2.1.2.  Note that in certain cases, the m= line protocol may not match that of the default candidate, because the m= line protocol value MUST match what was supplied in the offer, as described above.
 
 *  Each "a=ice-ufrag" and "a=ice-pwd" line MUST stay the same, unless the m= section is restarting, in which case new ICE credentials must be created as specified in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.4.1.1.1.  If the m= section is bundled into another m= section, it still MUST NOT contain any ICE credentials.
 
@@ -1162,7 +1162,7 @@ If the "m=" proto value indicates use of RTP, as described in Section 5.1.2 abov
 
 *  If present, a single "a=rtcp" attribute MUST be parsed as specified in [RFC3605], Section 2.1, but its value is ignored, as this information is superfluous when using ICE.
 
-*  If present, "a=msid" attributes MUST be parsed as specified in [I-D.ietf-mmusic-msid], Section 3.2, and their values stored, ignoring any "appdata" field.
+*  If present, "a=msid" attributes MUST be parsed as specified in [I-D.ietf-mmusic-msid], Section 3.2, and their values stored, ignoring any "appdata" field.  If no "a=msid" attributes are present, a random msid-id value is generated for a "default" MediaStream for the session, if not already present, and this value is stored.
 
 *  Any "a=imageattr" attributes MUST be parsed as specified in [RFC6236], Section 3, and their values stored.
 
