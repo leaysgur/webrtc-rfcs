@@ -139,7 +139,7 @@ Linked means I've already read through.
 - [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
   - WebRTC IP Address Handling Requirements
   - P2Pするために集めたIPアドレスの扱いについて
-- [draft-ietf-rtcweb-mdns-ice-candidates-02](./summary/draft-ietf-rtcweb-mdns-ice-candidates-02.md)
+- [draft-ietf-rtcweb-mdns-ice-candidates-03](./summary/draft-ietf-rtcweb-mdns-ice-candidates-03.md)
   - Using Multicast DNS to protect privacy when exposing ICE candidates
   - プライバシー保護のためにプライベートIPの代わりにmDNSの登録名を使う提案について
 - draft-ietf-rtcweb-security-10
