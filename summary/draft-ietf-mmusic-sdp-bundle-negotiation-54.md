@@ -6,21 +6,63 @@
 
 ## 1. Introduction
 
+- 本文なし
+
 ### 1.1. Background
+
+- SDPでオファー・アンサーしてセッションを確立する
+- 通常は`m=`セクションごとに異なるトランスポートを使う
+- これをまとめて1つのトランスポートで実現できれば、リソース効率の面で魅力的
 
 ### 1.2. BUNDLE Mechanism
 
+- まとめられる単一のトランスポートをBUNDLEトランスポートとする
+  - メディアを送受信するアドレスとポート
+- SDPでBUNDLE用の属性を使う
+  - `a=group:BUNDLE`を定義する
+  - `m=`セクションをまとめあげる
+- ICEで確定する候補は1ペアだけになる
+- BUNDLEグループは複数あってもよい
+- 後方互換性があるので、BUNDLEできない場合は通常通りに別々にトランスポートを使う
+
 ### 1.3. Protocol Extensions
+
+- BUNDLEするときに使う`a=bundle-only`属性を追加する
+- その他のRFCへの更新は以下
+- 拒否するのではなく、`m=`行のポートに`0`を割り当てられるように
+  - RFC3264
+- RTCPのSDES項目に`MID`を追加
+  - RFC3550
+  - およびそのヘッダ拡張
+- `MID`拡張のための例外を追加
+  - RFC7941
 
 ## 2. Terminology
 
+- いつもの
+
 ## 3. Conventions
+
+- いつもの
 
 ## 4. Applicability Statement
 
+- この仕様に関する内容は、SDPを使ってオファー・アンサーを実施するときのみ有効
+
 ## 5. SDP Grouping Framework BUNDLE Extension
 
+- `a=group:BUNDLE`でBUNDLEする意志を表す
+  - この属性自体は複数定義できる
+  - ただし内包される`m=`セクションは、複数に属してはいけない
+- オファー・アンサー手順の詳細はSection 7にて
+
 ## 6. SDP 'bundle-only' Attribute
+
+- `a=bundle-only`属性をメディアレベルに追加
+  - 値はなし
+- アンサー側がBUNDLE非対応だった場合
+  - 何もしなくても拒否されるように、`m=`行のポートに`0`を指定してオファーしてもよい
+  - アンサー側がBUNDLE対応の場合は、`a=bundle-only`を見てそれを判別できる
 
 ## 7. SDP Offer/Answer Procedures
 
