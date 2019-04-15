@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { execFile } = require('child_process');
 
 const [,, targetPath] = process.argv;
 const fname = targetPath.split('/').pop();
@@ -23,4 +24,4 @@ ${toc.join('\n\n')}
 
 fs.writeFileSync(`./summary/${fname}`, summary);
 console.log(`./summary/${fname}`, 'created.');
-
+execFile('open', [`./summary/${fname}`]);
