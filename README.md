@@ -102,8 +102,9 @@ Linked means I've already read through.
 - [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the SDP
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
-- draft-ietf-mmusic-ice-sip-sdp-24
+- [draft-ietf-mmusic-ice-sip-sdp-24](./summary/draft-ietf-mmusic-ice-sip-sdp-24.md)
   - SDP Offer/Answer procedures for ICE
+  - ICEの情報をSDPにどう載せて使うかについて
 - [RFC4145](./summary/rfc4145.md)
   - TCP-Based Media Transport in the SDP
   - 元々はTCPのコネクションを確立するための`a=setup`行の成り立ちについて

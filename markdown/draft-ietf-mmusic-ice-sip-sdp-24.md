@@ -729,7 +729,7 @@ Mux Category:  NORMAL
 
 IANA maintains a registry for ice-options identifiers under the Specification Required policy as defined in "Guidelines for Writing an IANA Considerations Section in RFCs" [RFC5226].
 
-ICE options are of unlimited length according to the syntax in Section 4.6; however, they are RECOMMENDED to be no longer than 20 characters.  This is to reduce message sizes and allow for efficient parsing.  ICE options are defined at the session leve..
+ICE options are of unlimited length according to the syntax in Section 4.6; however, they are RECOMMENDED to be no longer than 20 characters.  This is to reduce message sizes and allow for efficient parsing.  ICE options are defined at the session level.
 
 A registration request MUST include the following information:
 
