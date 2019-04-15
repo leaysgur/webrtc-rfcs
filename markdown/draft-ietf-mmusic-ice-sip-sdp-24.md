@@ -291,14 +291,14 @@ The candidate attribute is a media-level attribute only.  It contains a transpor
 
 
 ```
-   candidate-attribute   = "candidate" ":" foundation SP component-id SP
-                           transport SP
-                           priority SP
-                           connection-address SP     ;from RFC 4566
-                           port         ;port from RFC 4566
-                           SP cand-type
-                           [SP rel-addr]
-                           [SP rel-port]
+   candidate-attribute   = "candidate" ":" <foundation> SP <component-id> SP
+                           <transport> SP
+                           <priority> SP
+                           <connection-address> SP     ;from RFC 4566
+                           <port>         ;port from RFC 4566
+                           SP <cand-type>
+                           [SP <rel-addr>]
+                           [SP <rel-port>]
                            *(SP extension-att-name SP
                                 extension-att-value)
 
@@ -318,21 +318,21 @@ The candidate attribute is a media-level attribute only.  It contains a transpor
 
 This grammar encodes the primary information about a candidate: its IP address, port and transport protocol, and its properties: the foundation, component ID, priority, type, and related transport address:
 
-<connection-address>:  is taken from RFC 4566 [RFC4566].  It is the IP address of the candidate.  When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value -- the presence of a colon indicates IPv6. An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
+connection-address:  is taken from RFC 4566 [RFC4566].  It is the IP address of the candidate.  When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value -- the presence of a colon indicates IPv6. An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
 
-<port>:  is also taken from RFC 4566 [RFC4566].  It is the port of the candidate.
+port:  is also taken from RFC 4566 [RFC4566].  It is the port of the candidate.
 
-<transport>:  indicates the transport protocol for the candidate. This specification only defines UDP.  However, extensibility is provided to allow for future transport protocols to be used with ICE by extending the sub-registry "ICE Transport Protocols" under "Interactive Connectivity Establishment (ICE)" registry.
+transport:  indicates the transport protocol for the candidate. This specification only defines UDP.  However, extensibility is provided to allow for future transport protocols to be used with ICE by extending the sub-registry "ICE Transport Protocols" under "Interactive Connectivity Establishment (ICE)" registry.
 
-<foundation>:  is composed of 1 to 32 <ice-char>s.  It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.  The foundation is used to optimize ICE performance in the Frozen algorithm as described in [RFC8445]
+foundation:  is composed of 1 to 32 ice-chars.  It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.  The foundation is used to optimize ICE performance in the Frozen algorithm as described in [RFC8445]
 
-<component-id>:  is a positive integer between 1 and 256 (inclusive) that identifies the specific component of the dta stream for which this is a candidate.  It MUST start at 1 and MUST increment by 1 for each component of a particular candidate.  For data streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.  See section 13 in [RFC8445] for additional discussion on extending ICE to new data streams.
+component-id:  is a positive integer between 1 and 256 (inclusive) that identifies the specific component of the dta stream for which this is a candidate.  It MUST start at 1 and MUST increment by 1 for each component of a particular candidate.  For data streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.  See section 13 in [RFC8445] for additional discussion on extending ICE to new data streams.
 
-<priority>:  is a positive integer between 1 and (2**31 - 1) inclusive.  The procedures for computing candidate's priority is described in section 5.1.2 of [RFC8445].
+priority:  is a positive integer between 1 and (2**31 - 1) inclusive.  The procedures for computing candidate's priority is described in section 5.1.2 of [RFC8445].
 
-<cand-type>:  encodes the type of candidate.  This specification defines the values "host", "srflx", "prflx", and "relay" for host, server reflexive, peer reflexive, and relayed candidates, respectively.  Specifications for new candidate types MUST define how, if at all, various steps in the ICE processing differ from the ones defined by this specification.
+cand-type:  encodes the type of candidate.  This specification defines the values "host", "srflx", "prflx", and "relay" for host, server reflexive, peer reflexive, and relayed candidates, respectively.  Specifications for new candidate types MUST define how, if at all, various steps in the ICE processing differ from the ones defined by this specification.
 
-<rel-addr> and <rel-port>:  convey transport addresses related to the candidate, useful for diagnostics and other purposes.  <rel-addr> and <rel-port> MUST be present for server reflexive, peer reflexive, and relayed candidates.  If a candidate is server or peer reflexive, <rel-addr> and <rel-port> are equal to the base for that server or peer reflexive candidate.  If the candidate is relayed, <rel-addr> and <rel-port> are equal to the mapped address in the Allocate response that provided the client with that relayed candidate (see Appendix B.3 of [RFC8445] for a discussion of its purpose).  If the candidate is a host candidate, <rel-addr> and <rel-port> MUST be omitted.
+rel-addr and rel-port:  convey transport addresses related to the candidate, useful for diagnostics and other purposes.  rel-addr and rel-port MUST be present for server reflexive, peer reflexive, and relayed candidates.  If a candidate is server or peer reflexive, rel-addr and rel-port are equal to the base for that server or peer reflexive candidate.  If the candidate is relayed, rel-addr and rel-port are equal to the mapped address in the Allocate response that provided the client with that relayed candidate (see Appendix B.3 of [RFC8445] for a discussion of its purpose).  If the candidate is a host candidate, rel-addr and rel-port MUST be omitted.
 
 In some cases, e.g., for privacy reasons, an agent may not want to reveal the related address and port.  In this case the address MUST be set to "0.0.0.0" (for IPv4 candidates) or "::" (for IPv6 candidates) and the port to zero.
 
@@ -444,7 +444,7 @@ The "ice-options" attribute is a session- and media-level attribute. It contains
 
 The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it, if the peer agent also includes the same extension in the answer.  There might be further extension specific negotiation needed between the agents that determine how the extensions gets used in a given session.  The details of the negotiation procedures, if present, MUST be defined by the specification defining the extension (see Section 9.2).
 
-Example shows 'rtp+ecn' ice-option SDP line from <<RFC6679>>:
+Example shows 'rtp+ecn' ice-option SDP line from RFC6679:
 
 
 ```
