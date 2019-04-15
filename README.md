@@ -113,10 +113,10 @@ Linked means I've already read through.
   - セキュアにメディアを転送するための`a=fingerprint`行の成り立ちについて
 - [RFC5763](./summary/rfc5763.md)
   - Framework for Establishing a SRTP Security Context Using DTLS
-  - SRTPの鍵交換にDTLSを使う方法について
+  - SRTPの鍵交換にDTLSを使うための`a=setup`行とその後の手順について
 - [RFC3605](./summary/rfc3605.md)
   - RTCP attribute in SDP
-  - RTCPのポートを定義する`a=rtcp`行について
+  - RTCPのポート番号を定義する`a=rtcp`行について
 - [RFC5506](./summary/rfc5506.md)
   - Support for Reduced-Size RTCP: Opportunities and Consequences
   - 通常のRTCPの複合パケットとは別で送られるReduced-Size RTCPの使用を意味する`a=rtcp-rsize`行について
