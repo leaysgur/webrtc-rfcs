@@ -777,8 +777,12 @@ It is recommended that the identification-tag is kept short.  Due to the propert
 This document adds the MID SDES item to the IANA "RTP SDES item types" registry as follows:
 
 
-
-Value:     TBD Abbrev.:   MID Name:      Media Identification Reference: RFCXXXX
+```
+     Value:     TBD
+     Abbrev.:   MID
+     Name:      Media Identification
+     Reference: RFCXXXX
+```
 
 ### 16.2. New RTP SDES Header Extension URI
 
@@ -787,8 +791,12 @@ Value:     TBD Abbrev.:   MID Name:      Media Identification Reference: RFCXXXX
 This document defines a new extension URI in the RTP SDES Compact Header Extensions sub-registry of the RTP Compact Header Extensions registry sub-registry, according to the following data:
 
 
-
-Extension URI: urn:ietf:params:rtp-hdrext:sdes:mid Description:   Media identification Contact:       IESG (iesg@ietf.org) Reference:     RFCXXXX
+```
+     Extension URI: urn:ietf:params:rtp-hdrext:sdes:mid
+     Description:   Media identification
+     Contact:       IESG (iesg@ietf.org)
+     Reference:     RFCXXXX
+```
 
 The SDES item does not reveal privacy information about the users. It is simply used to associate RTP-based media with the correct SDP media description ("m=" section) in the SDP used to negotiate the media.
 
@@ -803,8 +811,19 @@ The purpose of the extension is for the offerer to be able to associate received
 This document defines a new SDP media-level attribute, 'bundle-only', according to the following data:
 
 
-
-Attribute name:     bundle-only Type of attribute:  media Subject to charset: No Purpose:            Request a media description to be accepted in the answer only if kept within a BUNDLE group by the answerer. Appropriate values: N/A Contact name:       IESG Contact e-mail:     iesg@ietf.org Reference:          RFCXXXX Mux category:       NORMAL
+```
+     Attribute name:     bundle-only
+     Type of attribute:  media
+     Subject to charset: No
+     Purpose:            Request a media description to be accepted
+                         in the answer only if kept within a BUNDLE
+                         group by the answerer.
+     Appropriate values: N/A
+     Contact name:       IESG
+     Contact e-mail:     iesg@ietf.org
+     Reference:          RFCXXXX
+     Mux category:       NORMAL
+```
 
 ### 16.4. New SDP Group Semantics
 
@@ -813,14 +832,14 @@ Attribute name:     bundle-only Type of attribute:  media Subject to charset: No
 This document registers the following semantics with IANA in the "Semantics for the "group" SDP Attribute" subregistry (under the "Session Description Protocol (SDP) Parameters" registry:
 
 
-
-Semantics                              Token   Reference -------------------------------------  ------  ---------Media bundling                         BUNDLE  [RFCXXXX]
-
-
-
-Mux category:       NORMAL
+```
+     Semantics                              Token   Reference
+     -------------------------------------  ------  ---------
+     Media bundling                         BUNDLE  [RFCXXXX]
 
 
+     Mux category:       NORMAL
+```
 
 ## 17. Security Considerations
 

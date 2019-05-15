@@ -206,45 +206,126 @@
 
 ## 9. RTP Considerations
 
+- 本文なし
+
 ### 9.1. Single RTP Session
+
+- 同じBUNDLEグループに属することは、同じRTPセッションに属することを意味する
+  - RFC4961のSymmetric RTPに従う
+  - SSRCの名前空間も同じ
+  - `m=`行の`proto`も同一なはず
+- RTPのMIDヘッダ拡張は必須
+  - すべての`m=`セクションに
+  - `extmap`で`urn:ietf:params:rtp-hdrext:sdes:mid`をつける
+- SSRCは`m=`セクションをまたいで使われてはいけない
 
 #### 9.1.1. Payload Type (PT) Value Reuse
 
+- BUNDLEされる複数の`m=`セクションを表すRTP
+- すべて同じコーデック、パラメータである必要がある
+  - ペイロードタイプも同じ
+
 ### 9.2. Associating RTP/RTCP Streams with the Correct SDP Media Description
+
+- 受信したRTPと、SDPの`m=`セクションをどうやって照合するか
+- SSRCを使う
+  - SDPに`a=ssrc`をつける
+- RTPヘッダ拡張か、RTCPのSDESパケットによってパケットからSSRCを得る
+  - それができない場合は、ペイロードタイプを頼るしかない
+- RTPのストリームとSDPを紐付けるために、マッピングテーブルを用意して実装する
+  - MID, 送信用のSSRC, 受信用のSSRC
+- RTPを受け取っても、そのテーブルにSSRCがない場合は破棄する
+- RTCPパケットの扱いについて
+  - SDES, BYE, SR, RR, XR, RTPFB, PSFB
+  - フィードバックのそれぞれの条件による処理の違いなど
 
 ### 9.3. RTP/RTCP Multiplexing
 
+- BUNDLEを利用する場合、RTP/RTCPを多重化することも必要
+  - `rtcp-mux-only`
+
 #### 9.3.1. SDP Offer/Answer Procedures
+
+- `rtcp-mux`と`rtcp-mux-only`をどうネゴシエーションするか
+- これをつける = RTPベースのメディアを使いたいはずだが、RTPベースではない`m=`セクションも存在するはず
 
 ##### 9.3.1.1. Generating the Initial SDP BUNDLE Offer
 
+- 初期オファーについて
+- `rtcp-mux`はつけるが、`rtcp-mux-only`をつけない場合
+  - `a=rtcp`をつけてもよい
+
 ##### 9.3.1.2. Generating the SDP Answer
+
+- それに対するアンサーについて
+- `rtcp-mux`に対しては`rtcp-mux`を返す必要がある
+- `rtcp-mux-only`に対しては、`rtcp-mux-only`を返す
+- BUNDLEされた`m=`セクションには、`a=rtcp`を含めてはいけない
 
 ##### 9.3.1.3. Offerer Processing of the SDP Answer
 
+- オファー側がアンサーを受け取ったら
+- 適切に多重化を処理する
+- タグ付けされた`m=`行のポートにメディアを送信する
+
 ##### 9.3.1.4. Modifying the Session
+
+- セッション確立後に再度オファーする場合
+- `rtcp-mux`属性が必須
 
 ## 10. ICE Considerations
 
+- ICEとの兼ね合いについて
+- 基本的にはいつもどおりだが、いくつか例外がある
+  - BUNDLEが確立されると、`m=`セクション単位ではなく、BUNDLEトランスポートに対して処理を行う
+  - 接続チェックやキープアライブ
+- オファー時はBUNDLEされるかわからないので、ICEの属性は各`m=`セクションにつける
+- TrickleICEを使うときは、`m=`行のポートは`9`で、アドレスは`0.0.0.0` OR `::`になる
+
 ## 11. DTLS Considerations
+
+- DTLSとの兼ね合いについて
+- BUNDLEグループごとに1つのDTLSアソシエーションを形成する
+- DTLS-SRTPをサポートするなら、`use_srtp`拡張を使って`ClientHello`をする
+  - こうしておけば、後からメディアを追加するときにもDTLSのネゴシエーションが不要
 
 ## 12. RTP Header Extensions Consideration
 
+- RTPのヘッダ拡張を使用する場合、BUNDLEされるメディアたちは同一の定義を使う
+
 ## 13. Update to RFC 3264
+
+- RFC3264をアップデート
+- ポートを`0`に指定した場合の意味合いが変更点
 
 ### 13.1. Original text of section 5.1 (2nd paragraph) of RFC 3264
 
+- こうでした
+
 ### 13.2. New text replacing section 5.1 (2nd paragraph) of RFC 3264
+
+- こうなった
 
 ### 13.3. Original text of section 8.4 (6th paragraph) of RFC 3264
 
+- こうでした
+
 ### 13.4. New text replacing section 8.4 (6th paragraph) of RFC 3264
+
+- こうなった
 
 ## 14. Update to RFC 5888
 
+- RFC5888をアップデート
+- `a=group`属性で関連付けられる`m=`行のポートを`0`に指定できるのが変更点
+
 ### 14.1. Original text of section 9.2 (3rd paragraph) of RFC 5888
 
+- 古い文書がこうでした
+
 ### 14.2. New text replacing section 9.2 (3rd paragraph) of RFC 5888
+
+- こうなった
 
 ## 15. RTP/RTCP extensions for identification-tag transport
 
@@ -254,27 +335,55 @@
 
 ## 16. IANA Considerations
 
+- 本文なし
+
 ### 16.1. New SDES item
+
+- MID SDESを追加
 
 ### 16.2. New RTP SDES Header Extension URI
 
+- RTP SDESヘッダ拡張の追加
+  - `urn:ietf:params:rtp-hdrext:sdes:mid`
+
 ### 16.3. New SDP Attribute
 
+- SDPの`bundle-only`属性の追加
+
 ### 16.4. New SDP Group Semantics
+
+- SDPの`group`属性に`BUNDLE`値を追加
 
 ## 17. Security Considerations
 
 ## 18. Examples
 
+- 本文なし
+
 ### 18.1. Example: Tagged m= Section Selections
+
+- BUNDLEするSDPの例
+- オファーでBUNDLEが指定されている
+- アンサーはそれを受け入れる
+  - タグ付けされたものを引き継ぐ
+  - BUNDLEする`m=`セクションのポートは`0`にして、`bundle-only`
 
 ### 18.2. Example: BUNDLE Group Rejected
 
+- BUNDLEを拒否する例
+- アンサーで`a=group`を指定しない
+
 ### 18.3. Example: Offerer Adds a Media Description to a BUNDLE Group
+
+- 後からBUNDLEにメディアを追加する例
 
 ### 18.4. Example: Offerer Moves a Media Description Out of a BUNDLE Group
 
+- BUNDLEを解除する例
+
 ### 18.5. Example: Offerer Disables a Media Description Within a BUNDLE Group
+
+- BUNDLEから一部のメディアだけを解除する例
 
 ## Appendix A. Design Considerations
 
