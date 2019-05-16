@@ -135,8 +135,9 @@ Linked means I've already read through.
 - [RFC5888](./summary/rfc5888.md)
   - The Session Description Protocol (SDP) Grouping Framework
   - メディアをグルーピングできるセッションレベルの`a=group`属性とメディアレベルの`a=mid`属性について
-- draft-ietf-mmusic-sdp-bundle-negotiation-54
+- [draft-ietf-mmusic-sdp-bundle-negotiation-54](./summary/draft-ietf-mmusic-sdp-bundle-negotiation-54.md)
   - Negotiating Media Multiplexing Using the SDP
+  - 1つのポートで複数のメディアを送受信するための`a=group:BUNDLE`について
 - [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
   - WebRTC MediaStream Identification in the Session Description Protocol
   - SDPとMediaStream(Track)を紐付けるメディアレベルの`a=msid`行について

@@ -329,9 +329,27 @@
 
 ## 15. RTP/RTCP extensions for identification-tag transport
 
+- RTCP SDESに`MID`を定義するヘッダ拡張
+  - パケットでその`a=mid`値なのか判断するための項目
+- RTCP MID SDESは、定期的に送られるべき
+  - そのインターバルはパケロス具合にもよるのでここでは規定しない
+  - SSRCが変わっても送られる
+- 送られてこないことも想定する必要があって、ただちにセッションを終了するなどはしない
+
 ### 15.1. RTCP MID SDES Item
 
+- パケットフォーマットの図
+  - 00-08bit: MID
+  - 09-15bit: length
+  - 16-32bit: identification-tag
+    - `0`埋めしない
+
 ### 15.2. RTP SDES Header Extension For MID
+
+- RTP SDESヘッダ拡張
+- ペイロードは1-2byteのヘッダにエンコードされる
+- 識別タグは短いほうがよい
+  - 1byteのヘッダの場合、1-3byteなら結果敵に32bitで収まる
 
 ## 16. IANA Considerations
 
@@ -355,6 +373,10 @@
 - SDPの`group`属性に`BUNDLE`値を追加
 
 ## 17. Security Considerations
+
+- BUNDLEするかしないかで変わるのは、どのアドレス・ポートをRTPが流れるかだけ
+- MIDは、3byte以下にするのが効率的
+  - フィンガープリントとして使われないようにするほうが望ましい
 
 ## 18. Examples
 
@@ -387,14 +409,37 @@
 
 ## Appendix A. Design Considerations
 
+- この仕様を検討する上でのポイントについて
+- 主には、オファーとアンサーで`m=`行に同じポートを指定できるかどうか
+
 ### A.1. UA Interoperability
+
+- Symmetric RTPに対応しないエンドポイントもある
+- その場合は、オファーに対して異なるポート番号でアンサーが返ってくる
+- ICEを使う場合は、すべての`m=`行が同じポート番号を使うかもしれない
 
 ### A.2. Usage of Port Number Value Zero
 
+- `m=`行のポートに`0`を指定するケース
+- 本来はそのオファーを拒否する場合に使う
+- 複数のポートからBUNDLEグループが構成されていたら、拒否したい場合にどうする？
+  - という問題がある
+
 ### A.3. B2BUA And Proxy Interoperability
+
+- B2BUAについての懸念
 
 #### A.3.1. Traffic Policing
 
+- 特定の環境では、セッションを終了させられるかも
+  - SDPから取得したポートでメディアが送受信されない場合
+
 #### A.3.2. Bandwidth Allocation
 
+- 帯域の割当もSDPの情報で成されるかもしれない
+
 ### A.4. Candidate Gathering
+
+- ICEのcandidateは、ポートごとに必要
+  - `m=`セクションが増えるごとに、20msほどかかる想定
+- これを回避するために、TrickleICEを使用する
