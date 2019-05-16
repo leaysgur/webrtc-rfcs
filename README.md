@@ -137,12 +137,13 @@ Linked means I've already read through.
   - メディアをグルーピングできるセッションレベルの`a=group`属性とメディアレベルの`a=mid`属性について
 - [draft-ietf-mmusic-sdp-bundle-negotiation-54](./summary/draft-ietf-mmusic-sdp-bundle-negotiation-54.md)
   - Negotiating Media Multiplexing Using the SDP
-  - 1つのポートで複数のメディアを送受信するための`a=group:BUNDLE`について
+  - 1つのポートで複数のメディアを多重化するための`a=group:BUNDLE`について
 - [draft-ietf-mmusic-msid-17](./summary/draft-ietf-mmusic-msid-17.md)
   - WebRTC MediaStream Identification in the Session Description Protocol
   - SDPとMediaStream(Track)を紐付けるメディアレベルの`a=msid`行について
-- draft-ietf-mmusic-sdp-mux-attributes-17
+- [draft-ietf-mmusic-sdp-mux-attributes-17](./summary/draft-ietf-mmusic-sdp-mux-attributes-17.md)
   - A Framework for SDP Attributes when Multiplexing
+  - 多重化を実施する場合に、それぞれのSDPの属性がどのように影響を受けるかについて
 
 ### セキュリティ関連
 - [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
