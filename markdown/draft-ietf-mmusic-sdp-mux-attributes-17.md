@@ -728,8 +728,7 @@ NOTE: If SSRCs are repeated across "m=" lines being multiplexed, they MUST all r
 
 ### 5.20. RFC6285: Rapid Acquisition of Multicast RTP Sessions
 
-##   to further accelerate the acquisition. The motivating use case for this capability is multicast applications that carry real-time compressed audio and video.
-
+[RFC6285] describes a method using the existing RTP and RTCP machinery that reduces the acquisition delay.  In this method, an auxiliary unicast RTP session carrying the Reference Information to the receiver precedes or accompanies the multicast stream.  This unicast RTP flow can be transmitted at a faster than natural bitrate to further accelerate the acquisition.  The motivating use case for this capability is multicast applications that carry real-time compressed audio and video.
 
 ```
         +---------------+------------------+-------+--------------+
