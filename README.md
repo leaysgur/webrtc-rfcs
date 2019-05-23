@@ -80,6 +80,9 @@ Linked means I've already read through.
 - [RFC8421](./summary/rfc8421.md)
   - Guidelines for Multihomed and IPv4/IPv6 Dual-Stack ICE
   - candidateの優先度計算でIPv4とIPv6の違いをどう考慮するかについて
+- [draft-thatcher-ice-renomination-01](./summary/draft-thatcher-ice-renomination-01.md)
+  - ICE Renomination: Dynamically selecting ICE candidate pairs
+  - ノミネーションを動的に行い通信経路をいつでも変えられるようにするICE Renominationについて
 - RFC6544
   - TCP Candidates with ICE
 - [RFC5389](./summary/rfc5389.md)
