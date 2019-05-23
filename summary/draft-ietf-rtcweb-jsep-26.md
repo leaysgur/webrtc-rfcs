@@ -208,7 +208,7 @@
 
 ## 4. Interface
 
-- JSPEが実装するAPIについて
+- JSEPが実装するAPIについて
 - 実装されてる変数名・関数名は微妙に違うかもしれないので注意
 
 ### 4.1. PeerConnection
