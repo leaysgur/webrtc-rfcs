@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-25) / [markdown](../markdown/draft-ietf-mmusic-ice-sip-sdp-25.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-27) / [markdown](../markdown/draft-ietf-mmusic-ice-sip-sdp-27.md)
 
 ---
 
@@ -102,11 +102,14 @@
 
 - オファー側が初期オファーを生成するとき
   - `ice-ufrag`と`ice-pwd`属性が必須
+- 初期オファーに経路情報が載らないこともある
+  - それは`prflx`だけを使うつもりという意味
 
 #### 3.3.2. Sending the Initial Answer
 
 - 初期オファーへのアンサーを送信するとき
   - こちらも`ice-ufrag`と`ice-pwd`属性が必須
+- アンサーでは、オファーと同じプロトコルで`m=`行を用意する
 - アンサーを送信したら、接続確認をはじめられる
 - ICEを使えない場合は、それにまつわる属性をつけてアンサーしてはいけない
 - ICEミスマッチに対する処理はこの仕様の範囲外
