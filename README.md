@@ -148,6 +148,16 @@ Linked means I've already read through.
   - A Framework for SDP Attributes when Multiplexing
   - 多重化を実施する場合に、それぞれのSDPの属性がどのように影響を受けるかについて
 
+### DTLS: すべての通信の土台となる
+
+- RFC6347
+  - Datagram Transport Layer Security Version 1.2
+- RFC5764
+  - DTLS Extension to Establish Keys for the SRTP
+- RFC7983
+  - Multiplexing Scheme Updates for SRTP Extension for DTLS
+
+
 ### セキュリティ関連
 - [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
   - WebRTC IP Address Handling Requirements
@@ -165,15 +175,6 @@ Linked means I've already read through.
 <details>
 
 ---
-
-### DTLS: すべてのP2P通信の土台
-
-- RFC6347
-  - Datagram Transport Layer Security Version 1.2
-- RFC5764
-  - DTLS Extension to Establish Keys for the SRTP
-- RFC7983
-  - Multiplexing Scheme Updates for SRTP Extension for DTLS
 
 ### MediaChannel: RTPとその拡張、コーデック
 
