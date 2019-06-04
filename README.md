@@ -148,10 +148,11 @@ Linked means I've already read through.
   - A Framework for SDP Attributes when Multiplexing
   - 多重化を実施する場合に、それぞれのSDPの属性がどのように影響を受けるかについて
 
-### DTLS: すべての通信の土台となる
+### DTLS: すべての通信の土台
 
-- RFC6347
+- [RFC6347](./summary/rfc6347.md)
   - Datagram Transport Layer Security Version 1.2
+  - UDPでTLSを使用するための、DTLS 1.2について
 - RFC5764
   - DTLS Extension to Establish Keys for the SRTP
 - RFC7983
