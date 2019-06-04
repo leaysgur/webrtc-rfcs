@@ -23,7 +23,12 @@ const { readdir } = require('fs');
   })).catch(console.error);
 
   console.log('');
-  console.log(`${found.length} drafts were found!`);
+  if (found.length === 0) {
+    console.log('All drafts are still fresh! ;D');
+    return;
+  }
+
+  console.log(`${found.length} updated drafts were found!`);
   for (const url of found) {
     console.log(url);
   }
