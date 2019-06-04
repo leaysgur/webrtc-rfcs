@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-27) / [summary](../summary/draft-ietf-mmusic-ice-sip-sdp-27.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-32) / [summary](../summary/draft-ietf-mmusic-ice-sip-sdp-32.md)
 
 ---
 
@@ -14,7 +14,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 Readers should be familiar with the terminology defined in [RFC3264], in [RFC8445] and the following:
 
-Default Destination/Candidate:  The default destination for a component of a data stream is the transport address that would be used by an agent that is not ICE aware.  A default candidate for a component is one whose transport address matches the default destination for that component.  For the RTP component, the default connection address is in the "c=" line of the SDP, and the port and transport protocol are in the "m=" line.  For the RTCP component, the address and port are indicated using the "a=rtcp" attribute defined in [RFC3605], if present; otherwise, the RTCP component address is same as the address of the RTP component, and its port is one greater than the port of the RTP component.
+Default Destination/Candidate:  The default destination for a component of a data stream is the transport address that would be used by an agent that is not ICE aware.  A default candidate for a component is one whose transport address matches the default destination for that component.  For the RTP component, the default connection address is in the "c=" line of the SDP, and the port and transport protocol are in the "m=" line.  For the RTCP component, the address and port are indicated using the "a=rtcp" attribute defined in [RFC3605], if present; otherwise, the RTCP component address is the same as the address of the RTP component, and its port is one greater than the port of the RTP component.
 
 ## 3. SDP Offer/Answer Procedures
 
@@ -36,7 +36,7 @@ Each data stream [RFC8445] is represented by an SDP media description ("m=" sect
 
 ##### 3.2.1.2. Candidates
 
-With in a "m=" section, each candidate (including the default candidate) associated with the data stream is represented by an SDP candidate attribute.
+Within a "m=" section, each candidate (including the default candidate) associated with the data stream is represented by an SDP candidate attribute.
 
 Prior to nomination, the "c=" line associated with an "m=" section contains the connection address of the default candidate, while the "m=" line contains the port and transport protocol of the default candidate for that "m=" section.
 
@@ -66,7 +66,7 @@ If the port value associated with an "m=" section is set to zero (implying a dis
 
 If an agent utilizes both RTP and RTCP, and separate ports are used for RTP and RTCP, the agent MUST include SDP candidate attributes for both the RTP and RTCP components and SDP rtcp attribute SHOULD be included in the "m=" section, as described in [RFC3605]
 
-In the cases where the port number for the RTCP is one higher than the RTP port and RTCP component address is same as the address of the RTP component, the SDP rtcp attribute MAY be omitted.
+In the cases where the port number for the RTCP is one higher than the RTP port and the RTCP component address is the same as the address of the RTP component, the SDP rtcp attribute MAY be omitted.
 
 If the agent does not utilize RTCP, it indicates that by including b=RS:0 and b=RR:0 SDP attributes, as described in [RFC3556].
 
@@ -80,15 +80,19 @@ Once an agent has provided its local candidates to its peer in an SDP offer or a
 
 #### 3.2.5. Verifying ICE Support Procedures
 
-The agents will proceed with the ICE procedures defined in [RFC8445] and this specification if, for each data stream in the SDP it received, the default destination for each component of that data stream appears in a candidate attribute.  For example, in the case of RTP, the connection address, port and transport protocol are in the "c=" and "m=" lines, respectively, appear in a candidate attribute and the value in the rtcp attribute appears in a candidate attribute.
+#### 3.2.5. Verifying ICE Support Procedures
 
-If this condition is not met, the agents MUST process the SDP based on normal [RFC3264] procedures, without using any of the ICE mechanisms described in the remainder of this specification with the few exceptions noted below:
+The agents will proceed with the ICE procedures defined in [RFC8445] and this specification if, for each data stream in the SDP it received, the default destination for each component of that data stream appears in a candidate attribute.  For example, in the case of RTP, the connection address, port and transport protocol in the "c=" and "m=" lines, respectively, appear in a candidate attribute and the value in the rtcp attribute appears in a candidate attribute.
 
-1.  The presence of certain application layer gateways MAY modify the transport address information as described in Section 8.2.2.  The behavior of the responding agent in such a situation is implementation defined.  Informally, the responding agent MAY consider the mismatched transport address information as a plausible new candidate learnt from the peer and continue its ICE processing with that transport address included.  Alternatively, the responding agent MAY include an "a=ice-mismatch" attribute in its answer and MAY also omit a=candidate attributes for such data streams.
+This specification provides no guidance on how an agent should proceed in the cases where the above condition is not met with the few exceptions noted below:
 
-2.  The transport address from the peer for the default destination correspond to IP address values "0.0.0.0"/"::" and port value of "9".  This MUST not be considered as a ICE failure by the peer agent and the ICE processing MUST continue as usual.
+1.  The presence of certain application layer gateways MAY modify the transport address information as described in Section 8.2.2.  The behavior of the responding agent in such a situation is implementation dependent.  Informally, the responding agent MAY consider the mismatched transport address information as a plausible new candidate learnt from the peer and continue its ICE processing with that transport address included.  Alternatively, the responding agent MAY include an "a=ice-mismatch" attribute in its answer for such data streams.  If an agent chooses to include an "a=ice-mismatch" attribute in its answer for a data stream, then it MUST also omit "a=candidate" attributes, MUST terminate the usage of ICE procedures and [RFC3264] procedures MUST be used instead for this data stream.
 
-In some cases, controlling/initiator agent may receive the SDP answer that may omit "a=candidate" attributes for the media streams, and instead include a session level "a=ice-mismatch" attribute.  This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for this session.  This specification provides no guidance on how an agent should proceed in such a failure case.
+2.  The transport address from the peer for the default destination correspond to IPv4/IPv6 address values "0.0.0.0"/"::" and port value of "9".  This MUST NOT be considered as a ICE failure by the peer agent and the ICE processing MUST continue as usual.
+
+3.  In some cases, the scontrolling/initiator agent may receive the SDP answer that may omit "a=candidate" attributes for the data stream, and instead include a media level "a=ice-mismatch" attribute.  This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for this data stream.  In this case, ICE processing MUST be terminated for this data stream and [RFC3264] procedures MUST be followed instead.
+
+4.  The transport address from the peer for the default destination is an FQDN.  Regardless of the procedures used to resolve FQDN or the resolution result, this MUST NOT be considered as a ICE failure by the peer agent and the ICE processing MUST continue as usual.
 
 #### 3.2.6. SDP Example
 
@@ -97,7 +101,7 @@ The following is an example SDP message that includes ICE attributes (lines fold
 
 ```
    v=0
-   o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
+   o=jdoe 2890844526 2890842807 IN IP4 203.0.113.141
    s=
    c=IN IP4 192.0.2.3
    t=0 0
@@ -108,9 +112,9 @@ The following is an example SDP message that includes ICE attributes (lines fold
    b=RS:0
    b=RR:0
    a=rtpmap:0 PCMU/8000
-   a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
+   a=candidate:1 1 UDP 2130706431 203.0.113.141 8998 typ host
    a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
-    10.0.1.1 rport 8998
+    203.0.113.141 rport 8998
 ```
 
 ### 3.3. Initial Offer/Answer Exchange
@@ -119,7 +123,7 @@ The following is an example SDP message that includes ICE attributes (lines fold
 
 When an offerer generates the initial offer, in each "m=" section it MUST include SDP candidate attributes for each available candidate associated with the "m=" section.  In addition, the offerer MUST include an SDP ice-ufrag and an SDP ice-pwd attribute in the offer.
 
-It is valid for an offer "m=" line to include no SDP candidate attributes and with default destination corresponding to the IP address values "0.0.0.0"/"::" and port value of "9".  This implies that offering agent is only going to use peer reflexive candidates or that additional candidates would be provided in subsequent signaling messages.
+It is valid for an offer "m=" line to include no SDP candidate attributes and with default destination corresponding to the IP address values "0.0.0.0"/"::" and port value of "9".  This implies that the offering agent is only going to use peer reflexive candidates or that additional candidates would be provided in subsequent signaling messages.
 
 Note:  Within the scope of this document, "Initial Offer" refers to the first SDP offer that is sent in order to negotiate usage of ICE.  It might, or might not, be the initial SDP offer of the SDP session.
 
@@ -131,29 +135,33 @@ When an answerer receives an initial offer that indicates that the offerer suppo
 
 In each "m=" line, the answerer MUST use the same transport protocol as was used in the offer "m=" line.  If none of the candidates in the "m=" line in the answer use the same transport protocol as indicated in the offer "m=" line, then, in order to avoid ICE mismatch, the default destination MUST be set to IP address values "0.0.0.0"/"::" and port value of "9".
 
-It is also valid for an answer "m=" line to include no SDP candidate attributes and with default destination corresponding to the IP address values "0.0.0.0"/"::" and port value of "9".  This implies that answering agent is only going to use peer reflexive candidates or that additional candidates would be provided in subsequent signaling messages.
+It is also valid for an answer "m=" line to include no SDP candidate attributes and with default destination corresponding to the IP address values "0.0.0.0"/"::" and port value of "9".  This implies that the answering agent is only going to use peer reflexive candidates or that additional candidates would be provided in subsequent signaling messages.
 
 Once the answerer has sent the answer, it can start performing connectivity checks towards the peer candidates that were provided in the offer.
-
-In certain scenarios when either no candidates were provided in the offer or all the provided candidates were discarded (say, due to unsupported address type or FQDN name resolution failure), the answerer MUST NOT consider this as immediate ICE processing failure but instead MUST wait for the peer reflexive candidates to arrive to carryout the connectivity checks or eventually time out on the connectivity checks (see [draft-holmberg-ice-pac]).
 
 If the offer does not indicate support of ICE, the answerer MUST NOT accept the usage of ICE.  If the answerer still accepts the offer, the answerer MUST NOT include any ICE related SDP attributes in the answer.  Instead the answerer will generate the answer according to normal offer/answer procedures [RFC3264].
 
 If the answerer detects a possibility of the ICE mismatch, procedures described in (Section 3.2.5) are followed.
 
+Note:  <draft-holmberg-ice-pac>> provides guidance on finding working candidate pairs and thus preventing premature declaration of ICE failure in certain scenarios such as, if the peer has not provided any candidates, or if all provided candidates have failed or have been discarded.
+
 #### 3.3.3. Receiving the Initial Answer
 
 When an offerer receives an initial answer that indicates that the answerer supports ICE, it can start performing connectivity checks towards the peer candidates that were provided in the answer.
 
-In certain scenarios when either no candidates were provided in the answer or all the provided candidates were discarded (say, due to unsupported address type or FQDN name resolution failure), the offerer MUST NOT consider this as immediate ICE processing failure but instead MUST wait for the peer reflexive candidates to arrive to carryout the connectivity checks or eventually time out on the connectivity checks (see [draft-holmberg-ice-pac]).
+If the answer does not indicate that the answerer supports ICE, or if the answerer included "a=ice-mismatch" attributes for all the active data streams in the answer, the offerer MUST terminate the usage of ICE for the entire session and [RFC3264] procedures MUST be followed instead.
 
-If the answer does not indicate that the answerer supports ICE, or if the offerer detects an ICE mismatch in the answer, the offerer MUST terminate the usage of ICE.  The subsequent actions taken by the offerer are implementation dependent and are out of the scope of this specification.
+On the other hand, if the answer indicates the support for ICE but includes "a=ice-mismatch" in certain active data streams, then the offerer MUST terminate the usage of ICE procedures and [RFC3264] procedures MUST be used instead for only these data streams.  Also, ICE procedures MUST be used for data streams where an "a=ice-mismatch" attribute was not included.
+
+If the offerer detects an ICE mismatch for one or more data streams in the answer, as described in (Section 3.2.5), the offerer MUST terminate the usage of ICE for the entire session.  The subsequent actions taken by the offerer are implementation dependent and are out of the scope of this specification.
+
+Note:  <draft-holmberg-ice-pac>> provides guidance on finding working candidate pairs and thus preventing premature declaration of ICE failure in certain scenarios such as, if the peer has not provided any candidates, or if all provided candidates have failed or have been discarded.
 
 #### 3.3.4. Concluding ICE
 
-Once the state of each check list is Completed, and if the agent is the controlling agent, it nominates a candidate pair [RFC8445] and checks for each data stream whether the nominated pair matches the default candidate pair.  If there are one or more data streams with a match, and the peer did not indicate support for the 'ice2' ice-option, the controlling agent MUST generate a subsequent offer (Section 3.4.1), in which the connection address, port and transport protocol in the "c=" and "m=" lines associated with each data stream match the corresponding local information of the nominated pair for that data stream.
+Once the state of each check list is Completed, and if the agent is the controlling agent, it nominates a candidate pair [RFC8445] and checks for each data stream whether the nominated pair matches the default candidate pair.  If there are one or more data streams don't match, and the peer did not indicate support for the 'ice2' ice-option, the controlling agent MUST generate a subsequent offer (Section 3.4.1), in which the connection address, port and transport protocol in the "c=" and "m=" lines associated with each data stream match the corresponding local information of the nominated pair for that data stream.
 
-However, If the support for 'ice2' ice-option is in use, the nominated candidate is noted and sent in the subsequent offer/answer exchange as the default candidate and no updated offer is needed to fix the default candidate.
+However, if the support for 'ice2' ice-option is in use, the nominated candidate is noted and sent in the subsequent offer/answer exchange as the default candidate and no updated offer is needed to fix the default candidate.
 
 Also as described in [RFC8445], once the controlling agent has nominated a candidate pair for a data stream, the agent MUST NOT nominate another pair for that data stream during the lifetime of the ICE session (i.e. until ICE is restarted).
 
@@ -171,7 +179,7 @@ Should a subsequent offer fail, ICE processing continues as if the subsequent of
 
 An agent MAY restart ICE processing for an existing data stream [RFC8445].
 
-The rules governing the ICE restart imply that setting the connection address in the "c=" line to 0.0.0.0 (for IPv4)/ :: (for IPv6) will cause an ICE restart.  Consequently, ICE implementations MUST NOT utilize this mechanism for call hold, and instead MUST use a=inactive and a=sendonly as described in [RFC3264].
+The rules governing the ICE restart imply that setting the connection address in the "c=" line to 0.0.0.0 (for IPv4)/ :: (for IPv6) will cause an ICE restart.  Consequently, ICE implementations MUST NOT utilize this mechanism for call hold, and instead MUST use "a=inactive" and "a=sendonly" as described in [RFC3264].
 
 To restart ICE, an agent MUST change both the ice-pwd and the ice-ufrag for the data stream in an offer.  However, it is permissible to use a session-level attribute in one offer, but to provide the same ice-pwd or ice-ufrag as a media-level attribute in a subsequent offer.  This MUST NOT be considered as ICE restart.
 
@@ -199,29 +207,29 @@ The agent MAY change the default destination for media.  As with initial offers,
 
 Once a candidate pair has been nominated for a data stream, the connection address, port and transport protocol in each "c=" and "m=" line associated with that data stream MUST match the data associated with the nominated pair for that data stream.  In addition, the offerer only includes SDP candidates representing the local candidates of the nominated candidate pair.  The offerer MUST NOT include any other SDP candidate attributes in the subsequent offer.
 
-In addition, if the agent is controlling, it MUST include the a=remote-candidates attribute for each data stream whose check list is in the completed state.  The attribute contains the remote candidates corresponding to the nominated pair in the valid list for each component of that data stream.  It is needed to avoid a race condition whereby the controlling agent chooses its pairs, but the updated offer beats the connectivity checks to the controlled agent, which doesn't even know these pairs are valid, let alone selected. See Appendix B for elaboration on this race condition.
+In addition, if the agent is controlling, it MUST include the "a=remote-candidates" attribute for each data stream whose check list is in the completed state.  The attribute contains the remote candidates corresponding to the nominated pair in the valid list for each component of that data stream.  It is needed to avoid a race condition whereby the controlling agent chooses its pairs, but the updated offer beats the connectivity checks to the controlled agent, which doesn't even know these pairs are valid, let alone selected. See Appendix B for elaboration on this race condition.
 
 ##### 3.4.1.3. Procedures for Lite Implementations
 
-If the ICE state is running, a lite implementation MUST include all of its candidates for each component of each data stream in a=candidate attribute in any subsequent offer.  The candidates are formed identical to the procedures for initial offers.
+If the ICE state is running, a lite implementation MUST include all of its candidates for each component of each data stream in "a=candidate" attribute in any subsequent offer.  The candidates are formed identical to the procedures for initial offers.
 
-A lite implementation MUST NOT add additional host candidates in a subsequent offer.  If an agent needs to offer additional candidates, it MUST restart ICE.  Similarly, the username fragments or passwords MUST remain the same as used previously.  If an agent needs to change one of these, it MUST restart ICE for that media stream.
+A lite implementation MUST NOT add additional host candidates in a subsequent offer.  If an agent needs to offer additional candidates, it MUST restart ICE.  Similarly, the username fragments or passwords MUST remain the same as used previously.  If an agent needs to change one of these, it MUST restart ICE for that data stream.
 
 If ICE has completed for a data stream and if the agent is controlled, the default destination for that data stream MUST be set to the remote candidate of the candidate pair for that component in the valid list.  For a lite implementation, there is always just a single candidate pair in the valid list for each component of a data stream.  Additionally, the agent MUST include a candidate attribute for each default destination.
 
-If ICE state is completed and if the agent is controlling (which only happens when both agents are lite), the agent MUST include the a=remote-candidates attribute for each data stream.  The attribute contains the remote candidates from the candidate pairs in the valid list (one pair for each component of each data stream).
+If ICE state is completed and if the agent is controlling (which only happens when both agents are lite), the agent MUST include the "a=remote-candidates" attribute for each data stream.  The attribute contains the remote candidates from the candidate pairs in the valid list (one pair for each component of each data stream).
 
 #### 3.4.2. Sending Subsequent Answer
 
-If ICE is Completed for a data stream, and the offer for that data stream lacked the a=remote-candidates attribute, the rules for construction of the answer are identical to those for the offerer, except that the answerer MUST NOT include the a=remote-candidates attribute in the answer.
+If ICE is Completed for a data stream, and the offer for that data stream lacked the "a=remote-candidates" attribute, the rules for construction of the answer are identical to those for the offerer, except that the answerer MUST NOT include the "a=remote-candidates" attribute in the answer.
 
-A controlled agent will receive an offer with the a=remote-candidates attribute for a data stream when its peer has concluded ICE processing for that data stream.  This attribute is present in the offer to deal with a race condition between the receipt of the offer, and the receipt of the Binding Response that tells the answerer the candidate that will be selected by ICE.  See Appendix B for an explanation of this race condition.  Consequently, processing of an offer with this attribute depends on the winner of the race.
+A controlled agent will receive an offer with the "a=remote-candidates" attribute for a data stream when its peer has concluded ICE processing for that data stream.  This attribute is present in the offer to deal with a race condition between the receipt of the offer, and the receipt of the Binding Response that tells the answerer the candidate that will be selected by ICE.  See Appendix B for an explanation of this race condition.  Consequently, processing of an offer with this attribute depends on the winner of the race.
 
 The agent forms a candidate pair for each component of the data stream by:
 
-*  Setting the remote candidate equal to the offerer's default destination for that component (i.e. the contents of the "m=" and "c=" lines for RTP, and the a=rtcp attribute for RTCP)
+*  Setting the remote candidate equal to the offerer's default destination for that component (i.e. the contents of the "m=" and "c=" lines for RTP, and the "a=rtcp" attribute for RTCP)
 
-*  Setting the local candidate equal to the transport address for that same component in the a=remote-candidates attribute in the offer.
+*  Setting the local candidate equal to the transport address for that same component in the "a=remote-candidates" attribute in the offer.
 
 The agent then sees if each of these candidate pairs is present in the valid list.  If a particular pair is not in the valid list, the check has "lost" the race.  Call such a pair a "losing pair".
 
@@ -243,13 +251,13 @@ For a given data stream, the answerer MAY include the same candidates that were 
 
 If the received offer contains the remote-candidates attribute for a data stream, the agent forms a candidate pair for each component of the data stream by:
 
-*  Setting the remote candidate equal to the offerer's default destination for that component (i.e., the contents of the "m=" and "c=" lines for RTP, and the a=rtcp attribute for RTCP).
+*  Setting the remote candidate equal to the offerer's default destination for that component (i.e., the contents of the "m=" and "c=" lines for RTP, and the "a=rtcp" attribute for RTCP).
 
-*  Setting the local candidate equal to the transport address for that same component in the a=remote-candidates attribute in the offer.
+*  Setting the local candidate equal to the transport address for that same component in the "a=remote-candidates" attribute in the offer.
 
 The state of ICE processing for that data stream is set to Completed.
 
-Furthermore, if the agent believed it was controlling, but the offer contained the a=remote-candidates attribute, both agents believe they are controlling.  In this case, both would have sent updated offers around the same time.
+Furthermore, if the agent believed it was controlling, but the offer contained the "a=remote-candidates" attribute, both agents believe they are controlling.  In this case, both would have sent updated offers around the same time.
 
 However, the signaling protocol carrying the offer/answer exchanges will have resolved this glare condition, so that one agent is always the 'winner' by having its offer received before its peer has sent an offer.  The winner takes the role of controlling, so that the loser (the answerer under consideration in this section) MUST change its role to controlled.
 
@@ -261,11 +269,11 @@ Besides the potential role change, change in the Valid list, and state changes, 
 
 ##### 3.4.3.1. Procedures for Full Implementations
 
-There may be certain situations where the offerer receives an SDP answer that lacks ICE candidates although the initial answer did. One example of such an "unexpected" answer might be happen when an ICE-unaware B2BUA introduces a media server during call hold using 3rd party call-control procedures.  Omitting further details how this is done, this could result in an answer being received at the holding UA that was constructed by the B2BUA.  With the B2BUA being ICE-unaware, that answer would not include ICE candidates.
+There may be certain situations where the offerer receives an SDP answer that lacks ICE candidates although the initial answer included them. One example of such an "unexpected" answer might be happen when an ICE-unaware Back-to-Back User Agent (B2BUA) introduces a media server during call hold using 3rd party call-control procedures.  Omitting further details how this is done, this could result in an answer being received at the holding UA that was constructed by the B2BUA.  With the B2BUA being ICE-unaware, that answer would not include ICE candidates.
 
 Receiving an answer without ICE attributes in this situation might be unexpected, but would not necessarily impair the user experience.
 
-When the offerer receives an answer indicating support for ICE, the offer performs on of the following actions:
+When the offerer receives an answer indicating support for ICE, the offer performs one of the following actions:
 
 *  If the offer was a restart, the agent MUST perform ICE restart procedures as specified in Section 3.4.3.1.1
 
@@ -275,7 +283,7 @@ When the offerer receives an answer indicating support for ICE, the offer perfor
 
 *  If ICE state is running for a given data stream, the agent recomputes the check list.  If a pair on the new check list was also on the previous check list, and its state is not Frozen, its state is copied over.  Otherwise, its state is set to Frozen.  If none of the check lists are active (meaning that the pairs in each check list are Frozen), appropriate procedures in [RFC8445] are performed to move candidate(s) to the Waiting state to further continue ICE processing.
 
-*  If ICE state is completed and the SDP answer conforms to Section 3.4.2, the agent MUST reman in the ICE completed state.
+*  If ICE state is completed and the SDP answer conforms to Section 3.4.2, the agent MUST remain in the ICE completed state.
 
 However, if the ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to [RFC3264] procedures and SHOULD NOT drop the dialog because of the missing ICE support or unexpected answer. Once the agent sends a new offer later on, it MUST perform an ICE restart.
 
@@ -330,6 +338,8 @@ This grammar encodes the primary information about a candidate: its IP address, 
 
 connection-address:  is taken from RFC 4566 [RFC4566].  It is the IP address of the candidate.  When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value -- the presence of a colon indicates IPv6. An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
 
+connection-address:  is taken from RFC 4566 [RFC4566].  It is the IP address of the candidate, allowing for IPv4 addresses, IPv6 addresses, and fully qualified domain names (FQDNs).  When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value - the presence of a colon indicates IPv6.  An agent generating local candidates MUST NOT use FQDN addresses.  An agent processing remote candidates MUST ignore candidate lines that include candidates with FQDN or IP address versions that are not supported or recognized.  The procedures for generation and handling of FQDN candidates, as well as, how agents indicate support for such procedures, need to be specified in an extension specification.
+
 port:  is also taken from RFC 4566 [RFC4566].  It is the port of the candidate.
 
 transport:  indicates the transport protocol for the candidate. This specification only defines UDP.  However, extensibility is provided to allow for future transport protocols to be used with ICE by extending the sub-registry "ICE Transport Protocols" under "Interactive Connectivity Establishment (ICE)" registry.
@@ -354,7 +364,7 @@ Example: SDP line for UDP server reflexive candidate attribute for the RTP compo
 
 
 ```
-a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr 10.0.1.1 rport 8998
+a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr 203.0.113.141 rport 8998
 ```
 
 ### 4.2. "remote-candidates" Attribute
@@ -390,7 +400,7 @@ The syntax of the "ice-lite" and "ice-mismatch" attributes, both of which are fl
    ice-mismatch           = "ice-mismatch"
 ```
 
-"ice-lite" is a session-level attribute only, and indicates that an agent is a lite implementation. "ice-mismatch" is a media-level attribute only, and when present in an answer, indicates that the offer arrived with a default destination for a media component that didn't have a corresponding candidate attribute.
+"ice-lite" is a session-level attribute only, and indicates that an agent is a lite implementation. "ice-mismatch" is a media-level attribute and only reported in the answer.  It indicates that the offer arrived with a default destination for a media component that didn't have a corresponding candidate attribute.  Inclusion of "a=ice-mismatch" attribute for a given data stream implies that even though both agents support ICE, ICE procedures MUST NOT be used for this data stream and [RFC3264] procedures MUST be used instead.
 
 ### 4.4. "ice-ufrag" and "ice-pwd" Attributes
 
@@ -428,18 +438,11 @@ The "ice-pacing" is a session level attribute that indicates the desired connect
    pacing-value              = 1*10DIGIT
 ```
 
-Following the procedures defined in [RFC8445], a default value of 50ms is used for an agent when ice-pacing attribute is omitted in the offer or the answer.
+Following the procedures defined in [RFC8445], a default value of 50ms is used for an agent when the ice-pacing attribute is omitted in the offer or the answer.
 
 The same rule applies for ice-pacing attribute values lower than 50ms.  This mandates that, if an agent includes the ice-pacing attribute, its value MUST be greater than 50ms or else a value of 50ms is considered by default for that agent.
 
 Also the larger of the ice-pacing attribute values between the offer and the answer (determined either by the one provided in the ice-pacing attribute or by picking the default value) MUST be considered for a given ICE session.
-
-Example shows ice-pacing value of 5 ms:
-
-
-```
-   a=ice-pacing:5
-```
 
 ### 4.6. "ice-options" Attribute
 
@@ -452,7 +455,7 @@ The "ice-options" attribute is a session- and media-level attribute. It contains
    ice-option-tag        = 1*ice-char
 ```
 
-The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and is willing to use it, if the peer agent also includes the same extension in the answer.  There might be further extension specific negotiation needed between the agents that determine how the extensions gets used in a given session.  The details of the negotiation procedures, if present, MUST be defined by the specification defining the extension (see Section 9.2).
+The existence of an ice-option in an offer indicates that a certain extension is supported by the agent and it is willing to use it, if the peer agent also includes the same extension in the answer.  There might be further extension specific negotiation needed between the agents that determine how the extension gets used in a given session.  The details of the negotiation procedures, if present, MUST be defined by the specification defining the extension (see Section 9.2).
 
 Example shows 'rtp+ecn' ice-option SDP line from RFC6679:
 
@@ -463,7 +466,7 @@ Example shows 'rtp+ecn' ice-option SDP line from RFC6679:
 
 ## 5. Keepalives
 
-All the ICE agents MUST follow the procedures defined in section 11 of [RFC8445] for sending keepalives.  The keepalives MUST be sent regardless of whether the data stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.  An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.
+All the ICE agents MUST follow the procedures defined in section 11 of [RFC8445] for sending keepalives.  The keepalives MUST be sent regardless of whether the data stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.  An agent can determine that its peer supports ICE by the presence of "a=candidate" attributes for each media session.
 
 ## 6. SIP Considerations
 
@@ -483,7 +486,7 @@ Two cases can be considered -- one where the offer is present in the initial INV
 
 To reduce post-dial delays, it is RECOMMENDED that the caller begin gathering candidates prior to actually sending its initial INVITE, so that the candidates can be provided in the INVITE.  This can be started upon user interface cues that a call is pending, such as activity on a keypad or the phone going off-hook.
 
-On the receipt of the offer, the answerer SHOULD generate an answer in a provisional response as soon as it has completed gathering the candidates.  ICE requires that a provisional response with an SDP be transmitted reliably.  This can be done through the existing Provisional Response Acknowledgment (PRACK) mechanism [RFC3262] or through an ICE specific optimization, wherein, the agent retransmits the provisional response with the exponential backoff timers described in [RFC3262].  Such retransmissions MUST cease on receipt of a STUN Binding request with transport address matching candidate address for one of the data streams signaled in that SDP or on transmission of the answer in a 2xx response.  If no Binding request is received prior to the last retransmit, the agent does not consider the session terminated.  For the ICE lite peers , the agent MUST cease retransmitting the 18x after sending it four times since there will be no Binding request sent and the number four is arbitrarily chosen to limit the number of 18x retransmits ('poor man's version of [RFC3262]' basically).  (ICE will actually work even if the peer never receives the 18x; however, experience has shown that sending it is important for middleboxes and firewall traversal).
+On the receipt of the offer, the answerer SHOULD generate an answer in a provisional response as soon as it has completed gathering the candidates.  ICE requires that a provisional response with an SDP be transmitted reliably.  This can be done through the existing Provisional Response Acknowledgment (PRACK) mechanism [RFC3262] or through an ICE specific optimization, wherein, the agent retransmits the provisional response with the exponential backoff timers described in [RFC3262].  Such retransmissions MUST cease on receipt of a STUN Binding request with transport address matching candidate address for one of the data streams signaled in that SDP or on transmission of the answer in a 2xx response.  If no Binding request is received prior to the last retransmit, the agent does not consider the session terminated.  For the ICE lite peers , the agent MUST cease retransmitting the 18x after sending it four times since there will be no Binding request sent and the number four is arbitrarily chosen to limit the number of 18x retransmits (poor man's version of [RFC3262] basically).  (ICE will actually work even if the peer never receives the 18x; however, experience has shown that sending it is important for middleboxes and firewall traversal).
 
 Once the answer has been sent, the agent SHOULD begin its connectivity checks.  Once candidate pairs for each component of a data stream enter the valid list, the answerer can begin sending media on that data stream.
 
@@ -543,7 +546,7 @@ Specifically, if ICE is used, the agent receiving the malicious SDP will first p
 
 Unfortunately, ICE doesn't help if it's not used, in which case an attacker could simply send the offer without the ICE parameters. However, in environments where the set of clients is known, and is limited to ones that support ICE, the server can reject any offers or answers that don't indicate ICE support.
 
-SIP User Agents (UA) [RFC3261] that are not willing to receive non-ICE answers MUST include an "ice" Option Tag in the SIP Require Header Field in their offer.  UAs that rejects non-ICE offers SHOULD use a 421 response code, together with an Option Tag "ice" in the Require Header Field in the response.
+SIP User Agents (UA) [RFC3261] that are not willing to receive non-ICE answers MUST include an "ice" Option Tag [RFC5768] in the SIP Require Header Field in their offer.  UAs that rejects non-ICE offers SHOULD use a 421 response code, together with an Option Tag "ice" in the Require Header Field in the response.
 
 #### 8.2.2. Interactions with Application Layer Gateways and SIP
 
@@ -782,7 +785,7 @@ The offer, with the variables replaced with their values, will look like (lines 
 v=0
 o=jdoe 2890844526 2890842807 IN IP6 fe80::6676:baff:fe9c:ee4a
 s=
-c=IN IP6 2001:420:c0e0:1005::61
+c=IN IP6 2001:DB8:8101:3a55:4858:a2a9:22ff:99b9
 t=0 0
 a=ice-pwd:asd88fgpdd777uzjYhagZg
 a=ice-ufrag:8hhY
@@ -791,7 +794,7 @@ b=RS:0
 b=RR:0
 a=rtpmap:0 PCMU/8000
 a=candidate:1 1 UDP 2130706431 fe80::6676:baff:fe9c:ee4a 8998 typ host
-a=candidate:2 1 UDP 1694498815 2001:420:c0e0:1005::61 45664 typ srflx raddr
+a=candidate:2 1 UDP 1694498815 2001:DB8:8101:3a55:4858:a2a9:22ff:99b9 45664 typ srflx raddr
  fe80::6676:baff:fe9c:ee4a rport 8998
 ```
 
@@ -833,7 +836,7 @@ With the variables filled in:
 
 ## Appendix B. The remote-candidates Attribute
 
-The a=remote-candidates attribute exists to eliminate a race condition between the updated offer and the response to the STUN Binding request that moved a candidate into the Valid list.  This race condition is shown in Figure 1.  On receipt of message 4, agent L adds a candidate pair to the valid list.  If there was only a single data stream with a single component, agent L could now send an updated offer.  However, the check from agent R has not yet generated a response, and agent R receives the updated offer (message 7) before getting the response (message 9).  Thus, it does not yet know that this particular pair is valid.  To eliminate this condition, the actual candidates at R that were selected by the offerer (the remote candidates) are included in the offer itself, and the answerer delays its answer until those pairs validate.
+The "a=remote-candidates" attribute exists to eliminate a race condition between the updated offer and the response to the STUN Binding request that moved a candidate into the Valid list.  This race condition is shown in Figure 1.  On receipt of message 4, agent L adds a candidate pair to the valid list.  If there was only a single data stream with a single component, agent L could now send an updated offer.  However, the check from agent R has not yet generated a response, and agent R receives the updated offer (message 7) before getting the response (message 9).  Thus, it does not yet know that this particular pair is valid.  To eliminate this condition, the actual candidates at R that were selected by the offerer (the remote candidates) are included in the offer itself, and the answerer delays its answer until those pairs validate.
 
 
 ```
