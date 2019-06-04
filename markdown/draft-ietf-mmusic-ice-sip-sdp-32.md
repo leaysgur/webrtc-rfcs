@@ -80,8 +80,6 @@ Once an agent has provided its local candidates to its peer in an SDP offer or a
 
 #### 3.2.5. Verifying ICE Support Procedures
 
-#### 3.2.5. Verifying ICE Support Procedures
-
 The agents will proceed with the ICE procedures defined in [RFC8445] and this specification if, for each data stream in the SDP it received, the default destination for each component of that data stream appears in a candidate attribute.  For example, in the case of RTP, the connection address, port and transport protocol in the "c=" and "m=" lines, respectively, appear in a candidate attribute and the value in the rtcp attribute appears in a candidate attribute.
 
 This specification provides no guidance on how an agent should proceed in the cases where the above condition is not met with the few exceptions noted below:
