@@ -105,7 +105,7 @@ Linked means I've already read through.
 - [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the SDP
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
-- [draft-ietf-mmusic-ice-sip-sdp-32](./summary/draft-ietf-mmusic-ice-sip-sdp-32.md)
+- [draft-ietf-mmusic-ice-sip-sdp-36](./summary/draft-ietf-mmusic-ice-sip-sdp-36.md)
   - SDP Offer/Answer procedures for ICE
   - ICEの情報をSDPにどう載せて使うかについて
 - [RFC4145](./summary/rfc4145.md)
