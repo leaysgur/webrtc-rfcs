@@ -162,7 +162,7 @@ Linked means I've already read through.
 
 
 ### セキュリティ関連
-- [draft-ietf-rtcweb-ip-handling-11](./summary/draft-ietf-rtcweb-ip-handling-11.md)
+- [draft-ietf-rtcweb-ip-handling-12](./summary/draft-ietf-rtcweb-ip-handling-12.md)
   - WebRTC IP Address Handling Requirements
   - P2Pするために集めたIPアドレスの扱いについて
 - [draft-ietf-rtcweb-mdns-ice-candidates-03](./summary/draft-ietf-rtcweb-mdns-ice-candidates-03.md)
