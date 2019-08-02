@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-36) / [summary](../summary/draft-ietf-mmusic-ice-sip-sdp-36.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-37) / [summary](../summary/draft-ietf-mmusic-ice-sip-sdp-37.md)
 
 ---
 
@@ -54,7 +54,7 @@ An ICE lite implementation [RFC8445] MUST include an SDP ice-lite attribute.  A 
 
 An agent uses the SDP ice-options attribute to indicate support of ICE extensions.
 
-An agent compliant to this specification MUST include an SDP ice-options attribute with an "ice2" attribute value.  If an agent receives an SDP offer or answer with ICE attributes but without the "ice2" ice-options attribute value, the agent assumes that the peer is compliant to [RFC5245].
+An agent compliant to this specification MUST include an SDP ice-options attribute with an "ice2" attribute value [RFC 8445].  If an agent receives an SDP offer or answer that does not contain an SDP ice-options attribute with an "ice2" attribute value, the agent can assume that the peer is compliant to [RFC5245].
 
 ##### 3.2.1.6. Inactive and Disabled Data Streams
 
@@ -119,7 +119,7 @@ The following is an example SDP message that includes ICE attributes (lines fold
 
 #### 3.3.1. Sending the Initial Offer
 
-When an offerer generates the initial offer, in each "m=" section it MUST include SDP candidate attributes for each available candidate associated with the "m=" section.  In addition, the offerer MUST include an SDP ice-ufrag and an SDP ice-pwd attribute in the offer.
+When an offerer generates the initial offer, in each "m=" section it MUST include SDP candidate attributes for each available candidate associated with the "m=" section.  In addition, the offerer MUST include an SDP ice-ufrag attribute, an SDP ice-pwd attribute and an SDP ice-options attribute with an "ice2" attribute value in the offer.  If the offerer is a full ICE implementation, it SHOULD include an ice-pacing attribute in the offer (if not included, the default value will apply).  A lite ICE implementation MUST NOT included the ice-pacing attribute in the offer (as it will not perform connectivity checks).
 
 It is valid for an offer "m=" line to include no SDP candidate attributes and with default destination corresponding to the IP address values "0.0.0.0"/"::" and port value of "9".  This implies that the offering agent is only going to use peer reflexive candidates or that additional candidates would be provided in subsequent signaling messages.
 
@@ -129,7 +129,7 @@ Note:  The procedures in this document only consider "m=" sections associated wi
 
 #### 3.3.2. Sending the Initial Answer
 
-When an answerer receives an initial offer that indicates that the offerer supports ICE, and if the answerer accepts the offer and the usage of ICE, in each "m=" section within the answer, it MUST include SDP candidate attributes for each available candidate associated with the "m=" section.  In addition, the answerer MUST include an SDP ice-ufrag and an SDP ice-pwd attribute in the answer.
+When an answerer receives an initial offer that indicates that the offerer supports ICE, and if the answerer accepts the offer and the usage of ICE, in each "m=" section within the answer, it MUST include SDP candidate attributes for each available candidate associated with the "m=" section.  In addition, the answerer MUST include an SDP ice-ufrag attribute, an SDP ice-pwd attribute and an SDP ice-options attribute with an "ice2" attribute value in the answer.  If the answerer is a full ICE implementation, it SHOULD include an ice-pacing attribute in the answerer (if not included, the default value will apply).  A lite ICE implementation MUST NOT included the ice-pacing attribute in the answer (as it will not perform connectivity chekcks).
 
 In each "m=" line, the answerer MUST use the same transport protocol as was used in the offer "m=" line.  If none of the candidates in the "m=" line in the answer use the same transport protocol as indicated in the offer "m=" line, then, in order to avoid ICE mismatch, the default destination MUST be set to IP address values "0.0.0.0"/"::" and port value of "9".
 
@@ -141,8 +141,6 @@ If the offer does not indicate support of ICE, the answerer MUST NOT accept the 
 
 If the answerer detects a possibility of an ICE mismatch, procedures described in (Section 3.2.5) are followed.
 
-Note:  [draft-holmberg-ice-pac] provides guidance on finding working candidate pairs and thus preventing premature declaration of ICE failure in certain scenarios such as, if the peer has not provided any candidates, or if all provided candidates have failed or have been discarded.
-
 #### 3.3.3. Receiving the Initial Answer
 
 When an offerer receives an initial answer that indicates that the answerer supports ICE, it can start performing connectivity checks towards the peer candidates that were provided in the answer.
@@ -153,15 +151,15 @@ On the other hand, if the answer indicates support for ICE but includes "a=ice-m
 
 If the offerer detects an ICE mismatch for one or more data streams in the answer, as described in Section 3.2.5, the offerer MUST terminate the usage of ICE for the entire session.  The subsequent actions taken by the offerer are implementation dependent and are out of the scope of this specification.
 
-Note:  [draft-holmberg-ice-pac] provides guidance on finding working candidate pairs and thus preventing premature declaration of ICE failure in certain scenarios such as, if the peer has not provided any candidates, or if all provided candidates have failed or have been discarded.
-
 #### 3.3.4. Concluding ICE
 
-Once the state of each check list is Completed, and if the agent is the controlling agent, it nominates a candidate pair [RFC8445] and checks for each data stream whether the nominated pair matches the default candidate pair.  If there are one or more data streams don't match, and the peer did not indicate support for the 'ice2' ice-option, the controlling agent MUST generate a subsequent offer (Section 3.4.1), in which the connection address, port and transport protocol in the "c=" and "m=" lines associated with each data stream match the corresponding local information of the nominated pair for that data stream.
+Once the agent has successfully nominated a pair [RFC8445], the state of the check list associated with the pair is set to Completed.  Once the state of each check list is set to either Completed or Failed, for each Completed check list the agent checks whether the nominated pair matches the default candidate pair.  If there are one or more pairs that do not match, and the peer did not indicate support for the 'ice2' ice-option, the controlling agent MUST generate a subsequent offer, in which the connection address, port and transport protocol in the "c=" and "m=" lines associated with each data stream match the corresponding local information of the nominated pair for that data stream (Section 3.4.1.2.2).  If the peer did indicate support for the 'ice2' ice-option, the controlling agent does not immediately need to generate an updated offer in order to align a connection address, port and protocol with a nominated pair. However, later in the session, whenever the controlling agent does sent a subsequent offer, it MUST do the alignment as described above.
 
-However, if the support for 'ice2' ice-option is in use, the nominated candidate is noted and sent in the subsequent offer/answer exchange as the default candidate and no updated offer is needed to fix the default candidate.
+If there are one or more check lists with the state set to Failed, the controlling agent MUST generate a subsequent offer in order to remove the associated data streams by setting the port value of the data streams to zero (Section 3.4.1.1.2), even if the peer did indicate support for the 'ice2' ice-option.  If needed, such offer can also be used to align the connection address, port and transport protocol, as described above.
 
-Also as described in [RFC8445], once the controlling agent has nominated a candidate pair for a data stream, the agent MUST NOT nominate another pair for that data stream during the lifetime of the ICE session (i.e. until ICE is restarted).
+As described in [RFC8445], once the controlling agent has nominated a candidate pair for a check list, the agent MUST NOT nominate another pair for that check list during the lifetime of the ICE session (i.e. until ICE is restarted).
+
+[draft-ietf-ice-pac] provides a mechanism for allowing the ICE process to run long enough in order to find working candidate pairs, by waiting for potential peer-reflexive candidates, even though no candidate pairs were received from the peer or all current candidate pairs associated with a check list have either failed or been discarded.  It is OPTIONAL for an ICE agent to support the mechanism.
 
 ### 3.4. Subsequent Offer/Answer Exchanges
 
@@ -173,7 +171,7 @@ Should a subsequent offer fail, ICE processing continues as if the subsequent of
 
 ##### 3.4.1.1. Procedures for All Implementations
 
-###### 3.4.1.1.1. ICE Restarts
+###### 3.4.1.1.1. ICE Restart
 
 An agent MAY restart ICE processing for an existing data stream [RFC8445].
 
@@ -181,7 +179,7 @@ The rules governing the ICE restart imply that setting the connection address in
 
 To restart ICE, an agent MUST change both the ice-pwd and the ice-ufrag for the data stream in an offer.  However, it is permissible to use a session-level attribute in one offer, but to provide the same ice-pwd or ice-ufrag as a media-level attribute in a subsequent offer.  This MUST NOT be considered as ICE restart.
 
-An agent sets the rest of the ICE-related fields in the SDP for this data stream as it would in an initial offer of this data stream (see Section 3.2.1).  Consequently, the set of candidates MAY include some, none, or all of the previous candidates for that data stream and MAY include a totally new set of candidates.
+An agent sets the rest of the ICE-related fields in the SDP for this data stream as it would in an initial offer of this data stream (see Section 3.2.1).  Consequently, the set of candidates MAY include some, none, or all of the previous candidates for that data stream and MAY include a totally new set of candidates.  The agent MAY modify the attribute values of the SDP ice-options and SDP ice-pacing attributes, and it MAY change its role using the SDP ice-lite attribute.  The agent MUST NOT modify the SDP ice-options, ice-pacing and ice-lite attributes in a subsequent offer unless the offer is sent in order to request an ICE restart.
 
 ###### 3.4.1.1.2. Removing a Data Stream
 
@@ -241,9 +239,11 @@ Once there are no losing pairs, the agent can generate the answer. It MUST set t
 
 ##### 3.4.2.1. ICE Restart
 
-If the offerer in a subsequent offer requested an ICE restart for a data stream, and if the answerer accepts the offer, the answerer follows the procedures for generating an initial answer.
+If the offerer in a subsequent offer requested an ICE restart Section 3.4.1.1.1 for a data stream, and if the answerer accepts the offer, the answerer follows the procedures for generating an initial answer.
 
 For a given data stream, the answerer MAY include the same candidates that were used in the previous ICE session, but it MUST change the SDP ice-pwd and ice-ufrag attribute values.
+
+The answerer MAY modify the attribute values of the SDP ice-options and SDP ice-pacing attributes, and it MAY change its role using the SDP ice-lite attribute.  The answerer MUST NOT modify the SDP ice-options, ice-pacing and ice-lite attributes in a subsequent answer unless the answer is sent for an offer that was used to request an ICE restart Section 3.4.1.1.1.  If any of the SDP attributes have been modified in a subsequent offer that is not used to request an ICE restart, the answerer MUST reject the offer.
 
 ##### 3.4.2.2. Lite Implementation specific procedures
 
@@ -427,7 +427,7 @@ Example shows sample ice-ufrag and ice-pwd SDP lines:
 
 ### 4.5. "ice-pacing" Attribute
 
-The "ice-pacing" is a session level attribute that indicates the desired connectivity check pacing, in milliseconds, for this agent (see section 14 of [RFC8445]).  The syntax is:
+The "ice-pacing" is a session level attribute that indicates the desired connectivity check pacing (Ta interval), in milliseconds, that the sender wishes to use.  See section 14.2 of [RFC8445] for more information regarding selecting a pacing value.  The syntax is:
 
 
 ```
@@ -435,11 +435,9 @@ The "ice-pacing" is a session level attribute that indicates the desired connect
    pacing-value              = 1*10DIGIT
 ```
 
-Following the procedures defined in [RFC8445], a default value of 50ms is used for an agent when the ice-pacing attribute is omitted in the offer or the answer.
+If absent in an offer and answer the default value of the attribute is 50 ms, which is the recommended value specified in [RFC8445].
 
-The same rule applies for ice-pacing attribute values lower than 50ms.  This mandates that, if an agent includes the ice-pacing attribute, its value MUST be greater than 50ms or else a value of 50ms is considered by default for that agent.
-
-Also the larger of the ice-pacing attribute values between the offer and the answer (determined either by the one provided in the ice-pacing attribute or by picking the default value) MUST be considered for a given ICE session.
+Once both agents have indicated the pacing value they with to use, both agents MUST use the larger of the indicated values.
 
 ### 4.6. "ice-options" Attribute
 

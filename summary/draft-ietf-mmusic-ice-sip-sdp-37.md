@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-36) / [markdown](../markdown/draft-ietf-mmusic-ice-sip-sdp-36.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-mmusic-ice-sip-sdp-37) / [markdown](../markdown/draft-ietf-mmusic-ice-sip-sdp-37.md)
 
 ---
 
@@ -101,14 +101,20 @@
 #### 3.3.1. Sending the Initial Offer
 
 - オファー側が初期オファーを生成するとき
-  - `ice-ufrag`と`ice-pwd`属性が必須
+  - `ice-ufrag`と`ice-pwd`と`ice-options:ice2`属性が必須
+- ICE-Fullの実装である場合は、`ice-pacing`属性も推奨
+  - ない場合はデフォルトの間隔になる
+  - ICE-Liteの実装はつけてはいけない
 - 初期オファーに経路情報が載らないこともある
   - それは`prflx`だけを使うつもりという意味
 
 #### 3.3.2. Sending the Initial Answer
 
 - 初期オファーへのアンサーを送信するとき
-  - こちらも`ice-ufrag`と`ice-pwd`属性が必須
+  - こちらも`ice-ufrag`と`ice-pwd`と`ice-options:ice2`属性が必須
+- ICE-Fullの実装である場合は、`ice-pacing`属性も推奨
+  - ない場合はデフォルトの間隔になる
+  - ICE-Liteの実装はつけてはいけない
 - アンサーでは、オファーと同じプロトコルで`m=`行を用意する
 - アンサーを送信したら、接続確認をはじめられる
 - ICEを使えない場合は、それにまつわる属性をつけてアンサーしてはいけない
@@ -126,6 +132,8 @@
   - ローカルのICEの情報と、SDPに記載の情報
 - `ice2`をサポートしている場合、その経路はデフォルトの経路として以降のセッションで使われる
   - リスタートされるまで
+- オプショナルではあるが、draft-ietf-ice-pacをサポートしてもよい
+  - 潜在的な`prflx`の候補を待つことができる
 
 ### 3.4. Subsequent Offer/Answer Exchanges
 
@@ -139,11 +147,12 @@
 
 - 本文なし
 
-###### 3.4.1.1.1. ICE Restarts
+###### 3.4.1.1.1. ICE Restart
 
 - `c=`行のIPを`0.0.0.0` OR `::`にセットすることは、ICEのリスタートを意味する
 - この仕組みは保留のために使ってはならず、そのためには`a=inactive`や`a=sendonly`を使う
 - リスタートしたら、`ice-ufrag`と`ice-pwd`を更新する
+- リスタートされるまで、`ice-options`や`ice-pacing`や`ice-lite`属性を変更してはいけない
 
 ###### 3.4.1.1.2. Removing a Data Stream
 
@@ -196,6 +205,7 @@
 - ICEをリスタートするときは、改めて初期オファーを送る
 - アンサー側はそれまでと同じ経路情報を提示してもよい
   - `ice-ufrag`と`ice-pwd`は更新する必要がある
+- このタイミングで、`ice-options`や`ice-pacing`や`ice-lite`属性を変更するかもしれない
 
 ##### 3.4.2.2. Lite Implementation specific procedures
 
@@ -287,6 +297,7 @@
 - `a=ice-pacing`
   - セッションレベル限定
 - 接続確認のタイマーの間隔を指定するための値
+  - `Ta`変数
   - デフォルトは`50ms`
 
 ### 4.6. "ice-options" Attribute
