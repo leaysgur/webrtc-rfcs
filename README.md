@@ -168,8 +168,9 @@ Linked means I've already read through.
 - [draft-ietf-rtcweb-mdns-ice-candidates-03](./summary/draft-ietf-rtcweb-mdns-ice-candidates-03.md)
   - Using Multicast DNS to protect privacy when exposing ICE candidates
   - プライバシー保護のためにプライベートIPの代わりにmDNSの登録名を使う提案について
-- draft-ietf-rtcweb-security-10
+- [draft-ietf-rtcweb-security-12](./summary/draft-ietf-rtcweb-security-12.md)
   - Security Considerations for WebRTC
+  - WebRTCにおけるセキュリティについて
 - draft-ietf-rtcweb-security-arch-17
   - WebRTC Security Architecture
 
