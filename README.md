@@ -91,6 +91,9 @@ Linked means I've already read through.
 - [RFC7064](./summary/rfc7064.md)
   - STUN URI Scheme for the STUN Protocol
   - STUNサーバーをURIで表すための`stun`と`stuns`について
+- [draft-ietf-ice-pac-02](./summary/draft-ietf-ice-pac-02.md)
+  - ICE Patiently Awaiting Connectivity
+  - ICEで`prflx`な候補を見つけるためのタイマーについて
 - draft-ietf-tram-turnbis-21
   - Traversal Using Relays around NAT (TURN): Relay Extensions to STUN
 
