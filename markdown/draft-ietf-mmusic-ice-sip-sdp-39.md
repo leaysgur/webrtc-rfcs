@@ -526,7 +526,7 @@ ICE works with Flows I, III, and IV as described in [RFC3725].  Flow I works wit
 
 The flows for continued operation, as described in Section 7 of [RFC3725], require additional behavior of ICE implementations to support.  In particular, if an agent receives a mid-dialog re-INVITE that contains no offer, it MUST restart ICE for each data stream and go through the process of gathering new candidates.  Furthermore, that list of candidates SHOULD include the ones currently being used for media.
 
-#### 8. Interactions with Application Layer Gateways and SIP
+## 8. Interactions with Application Layer Gateways and SIP
 
 Application Layer Gateways (ALGs) are functions present in a Network Address Translation (NAT) device that inspect the contents of packets and modify them, in order to facilitate NAT traversal for application protocols.  Session Border Controllers (SBCs) are close cousins of ALGs, but are less transparent since they actually exist as application-layer SIP intermediaries.  ICE has interactions with SBCs and ALGs.
 
