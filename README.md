@@ -91,6 +91,9 @@ Linked means I've already read through.
 - [RFC7064](./summary/rfc7064.md)
   - STUN URI Scheme for the STUN Protocol
   - STUNサーバーをURIで表すための`stun`と`stuns`について
+- [draft-ietf-ice-pac-02](./summary/draft-ietf-ice-pac-02.md)
+  - ICE Patiently Awaiting Connectivity
+  - ICEで`prflx`な候補を見つけるためのタイマーについて
 - draft-ietf-tram-turnbis-21
   - Traversal Using Relays around NAT (TURN): Relay Extensions to STUN
 
@@ -105,7 +108,7 @@ Linked means I've already read through.
 - [RFC3264](./summary/rfc3264.md)
   - An Offer/Answer Model with the SDP
   - WebRTCのオファー・アンサーモデルでSDPをどう使うかについて
-- [draft-ietf-mmusic-ice-sip-sdp-36](./summary/draft-ietf-mmusic-ice-sip-sdp-36.md)
+- [draft-ietf-mmusic-ice-sip-sdp-39](./summary/draft-ietf-mmusic-ice-sip-sdp-39.md)
   - SDP Offer/Answer procedures for ICE
   - ICEの情報をSDPにどう載せて使うかについて
 - [RFC4145](./summary/rfc4145.md)
