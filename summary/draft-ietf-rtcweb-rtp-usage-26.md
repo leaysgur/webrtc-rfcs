@@ -210,27 +210,87 @@
 
 - TMMBRというフィードバック
   - RFC5104
-- 受信者が帯域に制限があることを通知できる
+- 受信側が帯域に制限があることを通知できる
 - 受信した場合は、その帯域制限に従う必要がある
 - 送信は任意
 
 ### 5.2. Header Extensions
 
+- RTPのヘッダ拡張への対応はオプショナルでよい
+  - RFC5285
+- しかし利用される場合は、事前のシグナリングが必要
+- あくまで拡張なので、既存のものに影響を与えてはいけない
+
 #### 5.2.1. Rapid Synchronisation
+
+- 映像と音声の同期は、RTCPのSRパケットによって、受信側で行われる
+  - ただしこれは遅い
+- 代案として、Rapid Synchronisation拡張がある
+  - RFC6051
 
 #### 5.2.2. Client-to-Mixer Audio Level
 
+- Client to Mixer Audio Level拡張
+  - RFC6464
+- ミドルボックスに、音声の入力レベルを伝えることができる
+- 実装は必須
+- ヘッダの暗号化も推奨
+  - RFC6904
+  - シグナリング時に暗号化しない設定にもできるように
+
 #### 5.2.3. Mixer-to-Client Audio Level
+
+- Mixer to Client Audio Level拡張
+  - RFC6465
+- さっきの逆
+- 実装はオプショナル
+- 使用する場合はヘッダを暗号化する
+  - シグナリング時に暗号化しない設定にもできるように
 
 #### 5.2.4. Media Stream Identification
 
+- MID拡張
+- RTPを`mid`でバンドルするために必要
+
 #### 5.2.5. Coordination of Video Orientation
+
+- Coordination of Video Orientation拡張
+  - CVOと略す
+  - RFC7742
+- 映像を送受信するエンドポイントは必ず実装する
 
 ## 6. WebRTC Use of RTP: Improving Transport Robustness
 
+- RTPパケットのパケロスを防ぐためのツールはいろいろある
+  - ただしもちろんオーバーヘッドもある
+  - 輻輳も考慮しておく必要がある
+- そんな方法をいくつか解説していく
+
 ### 6.1. Negative Acknowledgements and RTP Retransmission
 
+- NACKというフィードバック
+  - RFC4585
+- RTCPのフィードバックの容量制限に従って、RTPのパケロスを送信側に通知できる
+  - 送信側はそれを受けてエンコーディングを調整する
+- 送信側はGeneric NACKを理解する必要があるが、無視することもできる
+- 受信側は、パケロスに際してNACKを送信できる
+  - ただしすべてのパケロスで送信するべきではない
+- RTPの再送ペイロードフォーマットで、NACKによってわかったパケロスを再送できる
+  - RFC4588
+  - 再送なので、RTTが小さい場合には効果的
+  - ただしその分の帯域を食う
+  - 再送は義務ではなく、必要かどうか送信側が判断する必要がある
+- 受信側は、このSSRCの多重化による再送パケットをサポートする必要がある
+  - セッション多重化による再送パケットも同じく
+
 ### 6.2. Forward Error Correction (FEC)
+
+- 前方誤り訂正
+  - 一定の帯域のオーバーヘッドを使って、パケロスに対応する
+- FECのスキームはいくつかあって、ペイロードタイプに固有のものもある
+- WebRTCで使えるFECはこちらを参照
+  - draft-ietf-rtcweb-fec-10
+  - ただしネゴシエーションすれば他の仕組みも使われるかも
 
 ## 7. WebRTC Use of RTP: Rate Control and Media Adaptation
 
