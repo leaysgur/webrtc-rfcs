@@ -163,6 +163,12 @@ Linked means I've already read through.
   - Multiplexing Scheme Updates for SRTP Extension for DTLS
   - STUN/DTLS/SRTPがすべて多重化された場合の識別方法について
 
+### RTP: およびその拡張、コーデック
+
+- [draft-ietf-rtcweb-rtp-usage-26](./summary/draft-ietf-rtcweb-rtp-usage-26.md)
+  - WebRTC Media Transport and Use of RTP
+  - WebRTCにおけるRTPの関係とその使い方について
+
 
 ### セキュリティ関連
 - [draft-ietf-rtcweb-ip-handling-12](./summary/draft-ietf-rtcweb-ip-handling-12.md)
@@ -183,14 +189,12 @@ Linked means I've already read through.
 
 ---
 
-### MediaChannel: RTPとその拡張、コーデック
+### RTP: およびその拡張、コーデック
 
 - RFC3550
   - RTP: A Transport Protocol for Real-Time Applications
 - RFC3711
   - The Secure Real-time Transport Protocol (SRTP)
-- draft-ietf-rtcweb-rtp-usage-26
-  - WebRTC Media Transport and Use of RTP
 - RFC7742
   - WebRTC Video Processing and Codec Requirements
 - RFC7874
