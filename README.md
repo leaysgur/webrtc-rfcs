@@ -5,11 +5,9 @@ WebRTC related RFCs, Dradts, and Specs.
 - See [`/markdown`](./markdown) for Markdown formatted RFC.
 - See [`/summary`](./summary) for Japanese summary of each RFC.
 
-## Lists
-
 Linked means I've already read through.
 
-### Overview
+## Overview
 
 - [draft-ietf-rtcweb-overview-19](./summary/draft-ietf-rtcweb-overview-19.md)
   - Overview: Real Time Protocols for Browser-based Applications
@@ -28,7 +26,7 @@ Linked means I've already read through.
 - RFC7874
   - WebRTC Audio Processing and Codec Requirements
 
-### W3C JavaScript API
+## W3C JavaScript API
 
 - [draft-ietf-rtcweb-jsep-26](./summary/draft-ietf-rtcweb-jsep-26.md)
   - JavaScript Session Establishment Protocol
@@ -70,7 +68,7 @@ Linked means I've already read through.
   - QUIC API for Client-to-Server Connections
   - `RTCQuicStream`について
 
-### ICE
+## ICE
 
 - [RFC8445](./summary/rfc8445.md)
   - ICE: A Protocol for Network Address Translator (NAT) Traversal
@@ -101,7 +99,7 @@ Linked means I've already read through.
 - draft-ietf-tram-turnbis-21
   - Traversal Using Relays around NAT (TURN): Relay Extensions to STUN
 
-### SDP
+## SDP
 
 - [draft-ietf-rtcweb-sdp-11](./summary/draft-ietf-rtcweb-sdp-11.md)
   - Annotated Example SDP for WebRTC
@@ -160,7 +158,7 @@ Linked means I've already read through.
   - SDP Bandwidth Modifiers for RTCP Bandwidth
 
 
-### DTLS
+## DTLS
 
 - [RFC6347](./summary/rfc6347.md)
   - Datagram Transport Layer Security Version 1.2
@@ -172,7 +170,7 @@ Linked means I've already read through.
   - Multiplexing Scheme Updates for SRTP Extension for DTLS
   - STUN/DTLS/SRTPがすべて多重化された場合の識別方法について
 
-### SRTP
+## SRTP
 
 - RFC3711
   - The Secure Real-time Transport Protocol (SRTP)
@@ -181,7 +179,7 @@ Linked means I've already read through.
 - RFC6562
   - Guidelines for the Use of Variable Bit Rate Audio with Secure RTP
 
-### RTP/RTCP
+## RTP/RTCP
 
 - [draft-ietf-rtcweb-rtp-usage-26](./summary/draft-ietf-rtcweb-rtp-usage-26.md)
   - WebRTC Media Transport and Use of RTP
@@ -237,7 +235,7 @@ Linked means I've already read through.
 - draft-ietf-rmcat-cc-requirements-09
   - Congestion Control Requirements for Interactive Real-Time Media
 
-### Security
+## Security
 - [draft-ietf-rtcweb-ip-handling-12](./summary/draft-ietf-rtcweb-ip-handling-12.md)
   - WebRTC IP Address Handling Requirements
   - P2Pするために集めたIPアドレスの扱いについて
@@ -250,25 +248,25 @@ Linked means I've already read through.
 - draft-ietf-rtcweb-security-arch-17
   - WebRTC Security Architecture
 
-### Not yet maintained
+## Not yet maintained
 
 <details>
 
 ---
 
-### SCTP
+## SCTP
 
 - RFC4960
   - Stream Control Transmission Protocol
 
-### DataChannel
+## DataChannel
 
 - draft-ietf-rtcweb-data-channel-13
   - WebRTC Data Channels
 - draft-ietf-rtcweb-data-protocol-09
   - WebRTC Data Channel Establishment Protocol
 
-### Simulcast / SVC
+## Simulcast / SVC
 
 - draft-ietf-mmusic-sdp-simulcast-14
   - Using Simulcast in SDP and RTP Sessions
@@ -277,7 +275,7 @@ Linked means I've already read through.
 - draft-ietf-avtext-rid-09
   - RTP Stream Identifier Source Description (SDES)
 
-### WebTransport
+## WebTransport
 
 - draft-vvv-webtransport-overview-00
   - The WebTransport Protocol Framework
