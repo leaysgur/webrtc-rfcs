@@ -21,8 +21,9 @@ Linked means I've already read through.
 - [webrtc-nv-use-cases](https://w3c.github.io/webrtc-nv-use-cases/)
   - WebRTC Next Version Use Cases
   - 過去を踏まえたこれからのWebRTCのユースケースについて
-- RFC7742
+- [RFC7742](./summary/rfc7742.md)
   - WebRTC Video Processing and Codec Requirements
+  - WebRTCで扱う映像の概要について
 - RFC7874
   - WebRTC Audio Processing and Codec Requirements
 
