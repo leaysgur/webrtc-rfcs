@@ -24,8 +24,9 @@ Linked means I've already read through.
 - [RFC7742](./summary/rfc7742.md)
   - WebRTC Video Processing and Codec Requirements
   - WebRTCで扱う映像の概要について
-- RFC7874
+- [RFC7874](./summary/rfc7874.md)
   - WebRTC Audio Processing and Codec Requirements
+  - WebRTCで扱う音声の概要について
 
 ## W3C JavaScript API
 
