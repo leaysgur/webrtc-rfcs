@@ -159,7 +159,6 @@ Linked means I've already read through.
 - RFC3556
   - SDP Bandwidth Modifiers for RTCP Bandwidth
 
-
 ## DTLS
 
 - [RFC6347](./summary/rfc6347.md)
@@ -237,6 +236,19 @@ Linked means I've already read through.
 - draft-ietf-rmcat-cc-requirements-09
   - Congestion Control Requirements for Interactive Real-Time Media
 
+## SCTP
+
+- RFC4960
+  - Stream Control Transmission Protocol
+
+## DataChannel
+
+- [draft-ietf-rtcweb-data-channel-13](./summary/draft-ietf-rtcweb-data-channel-13.md)
+  - WebRTC Data Channels
+  - WebRTCのData Channelについて
+- draft-ietf-rtcweb-data-protocol-09
+  - WebRTC Data Channel Establishment Protocol
+
 ## Security
 - [draft-ietf-rtcweb-ip-handling-12](./summary/draft-ietf-rtcweb-ip-handling-12.md)
   - WebRTC IP Address Handling Requirements
@@ -255,18 +267,6 @@ Linked means I've already read through.
 <details>
 
 ---
-
-## SCTP
-
-- RFC4960
-  - Stream Control Transmission Protocol
-
-## DataChannel
-
-- draft-ietf-rtcweb-data-channel-13
-  - WebRTC Data Channels
-- draft-ietf-rtcweb-data-protocol-09
-  - WebRTC Data Channel Establishment Protocol
 
 ## Simulcast / SVC
 
