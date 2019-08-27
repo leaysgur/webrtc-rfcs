@@ -170,6 +170,8 @@ Linked means I've already read through.
 - [RFC7983](./summary/rfc7983.md)
   - Multiplexing Scheme Updates for SRTP Extension for DTLS
   - STUN/DTLS/SRTPがすべて多重化された場合の識別方法について
+- RFC6083
+  - DTLS for SCTP
 
 ## SRTP
 
@@ -240,6 +242,14 @@ Linked means I've already read through.
 
 - RFC4960
   - Stream Control Transmission Protocol
+- RFC3758
+  - SCTP Partial Reliability Extension
+- RFC6525
+  - SCTP Stream Reconfiguration
+- RFC5061
+  - SCTP Dynamic Address Reconfiguration
+- RFC6951
+  - UDP Encapsulation of SCTP Packets for End-Host to End-Host Communication
 
 ## DataChannel
 
