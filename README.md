@@ -93,7 +93,7 @@ Linked means I've already read through.
 - [RFC7064](./summary/rfc7064.md)
   - STUN URI Scheme for the STUN Protocol
   - STUNサーバーをURIで表すための`stun`と`stuns`について
-- [draft-ietf-ice-pac-02](./summary/draft-ietf-ice-pac-02.md)
+- [draft-ietf-ice-pac-03](./summary/draft-ietf-ice-pac-03.md)
   - ICE Patiently Awaiting Connectivity
   - ICEで`prflx`な候補を見つけるためのタイマーについて
 - RFC6544
