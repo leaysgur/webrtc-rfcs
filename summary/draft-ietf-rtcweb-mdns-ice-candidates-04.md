@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-03) / [markdown](../markdown/draft-ietf-rtcweb-mdns-ice-candidates-03.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-04) / [markdown](../markdown/draft-ietf-rtcweb-mdns-ice-candidates-04.md)
 
 ---
 
@@ -28,12 +28,19 @@
 
 #### 3.1.1. Procedure
 
-- ICEのポリシーをまず確認
-- そのIPに対するmDNSホスト名が既に登録されているか確認
+- 以下の手順に沿って処理される
+- 1: 収集したIPがICEのポリシーとして、公開して良いかチェック
+  - よいなら今まで通りのICEの手順へ
+- 2: そのIPに対するmDNSホスト名が既に登録されているか確認
   - あるならそれをcandidateとして使う
-  - ないならホスト名を登録
-    - `${uuid/v4}.local`
+- 3: ホスト名を生成
+  - `${uuid/v4}.local`
+- 4: ホスト名を登録
+  - それをネットワークに周知してもよい
+- 5: 将来のためにキャッシュする
+- 6: IPアドレスを置き換えて、アプリケーション側に渡す
 - ホスト名の登録は事前にやっておいてもよい
+  - 同じ結果になるなら実装方法は任意
 - mDNSに非対応の場合、そもそも`host`のcandidateを公開しない実装もあるかも
 - IPv4とIPv6では異なるホスト名になる
 
@@ -41,29 +48,34 @@
 
 - 本文なし
 
-##### 3.1.2.1. Determining Address Privacy and Server-Reflexive Candidates
+##### 3.1.2.1. Registration
+
+- ホスト名の登録をネットワークに周知するのは非同期になる
+- ただしアドレス自体のアプリケーションの返答は即座にする必要がある
+
+##### 3.1.2.2. Determining Address Privacy and Server-Reflexive Candidates
 
 - グローバルなIPについては、mDNSで保護しなくてもよい
   - 既にグローバルに公開されてるので
 - ただしIPだけ見て、それがmDNSで保護されてるかどうかは判断できない
 - STUNで`srflx`のアドレスを集めた時に、同じアドレスが帰ってくれば、グローバルだと判断はできる
+- `srflx`の`raddr`は`0.0.0.0`/`::`で、`rport`は`9`にする
 
-##### 3.1.2.2. Special Handling for IPv6 Addresses
+##### 3.1.2.3. Special Handling for IPv6 Addresses
 
 - IPv6は特殊な特性なため、mDNSで保護しないという判断もあるかも
 
-##### 3.1.2.3. mDNS Candidate Encoding
+##### 3.1.2.4. mDNS Candidate Encoding
 
 - mDNSのホスト名は、SDPの`c=`行の`connection-address`で使われる
-- `address-type`は`IP4`
+  - ただそれが唯一の候補の場合は載せてはいけない
+- アドレス: `0.0.0.0`/`::` + ポート: `9`を使う
 
 ### 3.2. ICE Candidate Processing
 
 - 収集したcandidateの扱いについて
-  - リモートのピアに送るまで
 
 #### 3.2.1. Procedure
-
 
 - `connection-address`の値が、`.local`で終わらない場合
 - または`.`が複数含まれている場合
@@ -124,9 +136,13 @@
 - 同じネットワークに接続している場合、`host`のcandidate同士で接続できる
 - mDNSを使うと、各エンドポイントがmDNSに対応していれば問題ない
   - でも対応していないと、つながらなくなってしまう
+  - あまりに広域なネットワークでもつながらない可能性はある
 - mDNSが失敗するとTURNを使おうとするかもしれないが、接続までの時間やコストが増える
 - IPv6はmDNSで保護しないようにするなどで、これは緩和できる
-- mDNSの成果はいまも研究中で、この仕様が公開されるときには公表される予定
+- STUN+mDNSを使う環境での接続テストの統計を見ると次のようになった
+  - 片側だけ有効に比べて、両側で有効な場合のICEの接続率への影響は2%ほど
+  - STUNが必要になるケースは94%から97%に増加した
+  - NATのヘアピンに失敗してるのが理由であろう
 
 ### 4.2. Connection Setup Latency
 
@@ -135,9 +151,11 @@
 
 ### 4.3. Backward Compatibility
 
-- 後方互換性は影響ないはず
+- 後方互換性には影響ないはず
 - mDNSの名前をもらっても解決できないだけのはず
   - ただしそれがエラーになるなどICEが失敗するエンドポイントも稀にあった
+- シグナリング時に受信してないホストからの接続確認を処理できない
+  - おそらくこの理由によって、接続率は3%減少した
 
 ## 5. Examples
 

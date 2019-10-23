@@ -1,4 +1,4 @@
-> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-03) / [summary](../summary/draft-ietf-rtcweb-mdns-ice-candidates-03.md)
+> Read [original](https://tools.ietf.org/html/draft-ietf-rtcweb-mdns-ice-candidates-04) / [summary](../summary/draft-ietf-rtcweb-mdns-ice-candidates-04.md)
 
 ---
 
@@ -30,45 +30,45 @@ For each host candidate gathered by an ICE agent as part of the gathering proces
 
 1.  Check whether this IP address satisfies the ICE agent's policy regarding whether an address is safe to expose.  If so, expose the candidate and abort this process.
 
-2.  Check whether the ICE agent has previously generated, registered, and stored an mDNS hostname for this IP address as per Steps 3, 4, and 6.  If it has, skip ahead to Step 7.
+2.  Check whether the ICE agent has previously generated, registered, and stored an mDNS hostname for this IP address as per steps 3 to 5.  If it has, skip ahead to step 6.
 
 3.  Generate a unique mDNS hostname.  The unique name MUST consist of a version 4 UUID as defined in [RFC4122], followed by ".local".
 
-4.  Register the candidate's mDNS hostname as defined in [RFC6762].
+4.  Register the candidate's mDNS hostname as defined in [RFC6762]. The ICE agent SHOULD send an mDNS announcement for the hostname, but as the hostname is expected to be unique, the ICE agent SHOULD skip probing of the hostname.
 
-5.  If registering of the mDNS hostname fails, abort these steps. The candidate is not exposed.
+5.  Store the mDNS hostname and its related IP address in the ICE agent for future reuse.
 
-6.  Store the mDNS hostname and its related IP address in the ICE agent for future reuse.
+6.  Replace the IP address of the ICE candidate with its mDNS hostname and provide the candidate to the web application.
 
-7.  Replace the IP address of the ICE candidate with its mDNS hostname and provide the candidate to the web application.
+ICE agents can implement this procedure in any way as long as it produces equivalent results.  An implementation may for instance pre-register mDNS hostnames by executing steps 3 to 5 and prepopulate an ICE agent accordingly.  By doing so, only step 6 of the above procedure will be executed at the time of gathering candidates.
 
-ICE agents can implement this procedure in any way as long as it produces equivalent results.  An implementation may for instance pre-register mDNS hostnames by executing steps 3 to 6 and prepopulate an ICE agent accordingly.  By doing so, only step 7 of the above procedure will be executed at the time of gathering candidates.
-
-An implementation may also detect that mDNS is not supported by the available network interfaces.  The ICE agent may skip steps 3 and 4 and directly decide to not expose the host candidate.
+In order to prevent web applications from using this mechanism to query for mDNS support in the local network, the ICE agent SHOULD still provide mDNS candidates in step 6 even if the local network does not support mDNS or mDNS registration fails in step 4.
 
 This procedure ensures that an mDNS name is used to replace only one IP address.  Specifically, an ICE agent using an interface with both IPv4 and IPv6 addresses MUST expose a different mDNS name for each address.
 
 #### 3.1.2. Implementation Guidance
 
+##### 3.1.2.1. Registration
 
+Sending the mDNS announcement to the network can be delayed, for instance due to rate limits.  An ICE agent SHOULD provide the candidate to the web application as soon as its mDNS name is generated, regardless of whether the announcement has been sent on the network.
 
-##### 3.1.2.1. Determining Address Privacy and Server-Reflexive Candidates
+##### 3.1.2.2. Determining Address Privacy and Server-Reflexive Candidates
 
 Naturally, an address that is already exposed to the Internet does not need to be protected by mDNS, as it can be trivially observed by the web server or remote endpoint.  However, determining this ahead of time is not straightforward; while the fact that an IPv4 address is private can sometimes be inferred by its value, e.g., whether it is an [RFC1918] address, the reverse is not necessarily true.  IPv6 addresses present their own complications, e.g., private IPv6 addresses as a result of NAT64 [RFC6146].
 
 Instead, the determination of whether an address is public can be reliably made as part of the ICE gathering process.  For each mDNS host candidate generated according the guidance above, the usual STUN [RFC5389] request is sent to a STUN server.  This can be done for both IPv4 and IPv6 local addresses, provided that the application has configured both IPv4 and IPv6 STUN servers.  If the STUN response returns the same value as the local IP address, this indicates the address is in fact public.
 
-Regardless of the result, a server-reflexive candidate will be generated; the transport address of this candidate is an IP address and therefore distinct from the hostname transport address of the associated mDNS candidate, and as such MUST NOT be considered redundant per the guidance in [RFC8445], Section 5.1.3.  To avoid accidental IP address, this server-reflexive candidate MUST have its raddr field set to 0.0.0.0 and its rport field set to 0.
+Regardless of the result, a server-reflexive candidate will be generated; the transport address of this candidate is an IP address and therefore distinct from the hostname transport address of the associated mDNS candidate, and as such MUST NOT be considered redundant per the guidance in [RFC8445], Section 5.1.3.  To avoid accidental IP address disclosure, this server-reflexive candidate MUST have its raddr field set to "0.0.0.0"/"::" and its rport field set to "9", as discussed in [ICESDP], Section 9.1.
 
 Once an address has been identified as public, the ICE agent MAY cache this information and omit mDNS protection for that address in future ICE gathering phases.
 
-##### 3.1.2.2. Special Handling for IPv6 Addresses
+##### 3.1.2.3. Special Handling for IPv6 Addresses
 
 As noted in [IPHandling], private IPv4 addresses are especially problematic because of their unbounded lifetime.  However, the [RFC4941] IPv6 addresses recommended for WebRTC have inherent privacy protections, namely a short lifetime and the lack of any stateful information.  Accordingly, implementations MAY choose to not conceal [RFC4941] addresses with mDNS names as a tradeoff for improved peer-to-peer connectivity.
 
-##### 3.1.2.3. mDNS Candidate Encoding
+##### 3.1.2.4. mDNS Candidate Encoding
 
-The mDNS name of an mDNS candidate MUST be used in the connection-address field of its candidate attribute.  When an mDNS candidate is the default candidate, its mDNS name MUST be used in the connection-address field of the SDP "c=" line.  Since an mDNS candidate also conceals its address family, the "c=" line SHOULD use "IP4" in the address-type field.
+The mDNS name of an mDNS candidate MUST be used in the connection-address field of its candidate attribute.  However, when an mDNS candidate would be the default candidate, typically because there are no other candidates, its mDNS name MUST NOT be used in the connection-address field of the SDP "c=" line, as experimental deployment has indicated that many remote endpoints will fail to handle such a SDP.  In this situation, the IP address values "0.0.0.0"/"::" and port value "9" MUST instead be used in the c= and m= lines, similar to how the no-candidates case is handled in [ICESDP], Section 4.3.1.
 
 Any candidates exposed to the application via local descriptions MUST be identical to those provided during candidate gathering (i.e., MUST NOT contain private host IP addresses).
 
@@ -82,7 +82,7 @@ For any remote ICE candidate received by the ICE agent, the following procedure 
 
 1.  If the connection-address field value of the ICE candidate does not end with ".local" or if the value contains more than one ".", then process the candidate as defined in [RFC8445].
 
-2.  Otherwise, resolve the candidate using mDNS.
+2.  Otherwise, resolve the candidate using mDNS.  The ICE agent SHOULD set the unicast-response bit of the corresponding mDNS query message; this minimizes multicast traffic, as the response is probably only useful to the querying node.
 
 3.  If it resolves to an IP address, replace the mDNS hostname of the ICE candidate with the resolved IP address and continue processing of the candidate as defined in [RFC8445].
 
@@ -150,9 +150,9 @@ First, some networks may entirely disable mDNS.  Second, mDNS queries have limit
 
 When mDNS fails, ICE will attempt to fall back to either NAT hairpin, if supported, or TURN relay if not.  This may result in reduced connectivity, reduced throughput and increased latency, as well as increased cost in case of TURN relay.
 
-One potential mitigation, as discussed in Section 3.3, is to not conceal candidates created from [RFC4941] IPv6 addresses.  This permits connectivity even in large internal networks or where mDNS is disabled.
+During experimental testing of the mDNS technique across a set of known mDNS-aware endpoints that had configured a STUN server but not a TURN server, the observed impact to ICE connection rate was 2% (relative) when mDNS was enabled on both sides, compared to when mDNS was only enabled on one side.  In this testing, the percentage of connections that required STUN (i.e., went through a NAT) increased from 94% to 97%, indicating that mDNS succeeded about half the time, and fell back to NAT hairpin for the remainder.  The most likely explanation for the overall connection rate drop is that hairpinning failed in some cases.
 
-The exact impact of the mDNS technique is being researched experimentally and will be provided before publication of this document.
+One potential mitigation, as discussed in Section 3.3, is to not conceal candidates created from [RFC4941] IPv6 addresses.  This permits connectivity even in large internal networks or where mDNS is disabled.  Future versions of this document will include experimental data regarding this option.
 
 ### 4.2. Connection Setup Latency
 
@@ -164,7 +164,7 @@ Given that these mDNS registrations and queries are typically occurring on a loc
 
 For the most part, backward compatibility does not present a significant issue for the mDNS technique.  When an endpoint that supports mDNS communicates with an endpoint that does not, the legacy endpoint will still provide its local IP addresses, and accordingly a direct connection can still be attempted, even though the legacy endpoint cannot resolve the mDNS names provided by the new endpoint. In the event the legacy endpoint attempts to resolve mDNS names using Unicast DNS, this may cause ICE to take somewhat longer to fully complete, but should not have any effect on connectivity or connection setup time.
 
-However, some legacy endpoints are not fully spec-compliant and can behave unpredictably in the presence of ICE candidates that contain a hostname, potentially leading to ICE failure.  Such endpoints have been identified during testing of this technique, but appear to be rare.
+However, some legacy endpoints are not fully spec-compliant and can behave unpredictably in the presence of ICE candidates that contain a hostname, potentially leading to ICE failure.  Some endpoints may also fail to handle a connectivity check from an address that they have not received in signaling.  During the aforementioned experimental testing, the connection rate when interacting with endpoints that provided raw IP addresses (and therefore should be unaffected) decreased by 3% (relative), presumably for these reasons.
 
 ## 5. Examples
 
@@ -335,7 +335,7 @@ This last example demonstrates the overall ICE gathering process for two endpoin
 
      C1.1: candidate:1 1 udp 2122262783 9b36eaac-bb2e-49bb-bb78-
                      21c41c499900.local 10004 typ host
-     C1.2: candidate:2 1 udp 2122262527 76c82649-02d6-4030-8aef-
+     C1.2: candidate:2 1 udp 2122262527 76c82649-02d6-4040-8aef-
                      a2ba3a9019d5.local 10006 typ host
      C1.3: candidate:1 1 udp 1686055167 192.0.2.1
                      30004 typ srflx raddr 0.0.0.0 rport 0
