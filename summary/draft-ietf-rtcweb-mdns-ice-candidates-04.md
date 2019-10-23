@@ -157,53 +157,53 @@
 - シグナリング時に受信してないホストからの接続確認を処理できない
   - おそらくこの理由によって、接続率は3%減少した
 
-  ## 5. Examples
+## 5. Examples
 
-  - 簡単な例と少し複雑な例を紹介する
+- 簡単な例と少し複雑な例を紹介する
 
-  ### 5.1. Normal Handling
+### 5.1. Normal Handling
 
-  - お互いにmDNSの解決ができる場合
+- お互いにmDNSの解決ができる場合
 
-  ### 5.2. Peer-reflexive Candidate From Slow Signaling
+### 5.2. Peer-reflexive Candidate From Slow Signaling
 
-  - mDNSのcandidateが届く前に、STUNがきた場合
-  - それは`prflx`のcandidateとして扱われる
+- mDNSのcandidateが届く前に、STUNがきた場合
+- それは`prflx`のcandidateとして扱われる
 
-  ### 5.3. Peer-reflexive Candidate From Slow Resolution
+### 5.3. Peer-reflexive Candidate From Slow Resolution
 
-  - mDNSの解決が完了する前に、STUNがきた場合
-  - それも`prflx`のcandidateとして扱われる
+- mDNSの解決が完了する前に、STUNがきた場合
+- それも`prflx`のcandidateとして扱われる
 
-  ### 5.4. IPv4, IPv6, and STUN handling
+### 5.4. IPv4, IPv6, and STUN handling
 
-  - IPv4とIPv6両対応のエンドポイントどうしが通信する場合
+- IPv4とIPv6両対応のエンドポイントどうしが通信する場合
 
-  ## 6. Security Considerations
+## 6. Security Considerations
 
-  - 本文なし
+- 本文なし
 
-  ### 6.1. mDNS Message Flooding
+### 6.1. mDNS Message Flooding
 
-  - この仕様を満たすためには、ブラウザにmDNSの機能が必要
-    - 登録・解決
-    - OS側にももちろん実装されてる必要がある
-  - この実装を悪用される恐れはある
-    - ページを開くだけでmDNSの登録・削除を行うとか
-  - その処理にレート制限を入れるなどして対策すべき
+- この仕様を満たすためには、ブラウザにmDNSの機能が必要
+  - 登録・解決
+  - OS側にももちろん実装されてる必要がある
+- この実装を悪用される恐れはある
+  - ページを開くだけでmDNSの登録・削除を行うとか
+- その処理にレート制限を入れるなどして対策すべき
 
-  ### 6.2. Malicious Responses to Deny Name Registration
+### 6.2. Malicious Responses to Deny Name Registration
 
-  - mDNSの登録を拒まれる場合
-    - そのcandidateは破棄されてしまう
-  - ローカルのネットワークに悪意のあるエンドポイントがいる場合は、この仕様の範囲外
+- mDNSの登録を拒まれる場合
+  - そのcandidateは破棄されてしまう
+- ローカルのネットワークに悪意のあるエンドポイントがいる場合は、この仕様の範囲外
 
-  ### 6.3. Unsolicited ICE Communications
+### 6.3. Unsolicited ICE Communications
 
-  - ICEを悪用してトラフィック攻撃に使われるかも
-  - mDNSホスト名が公開されていると、その標的にされる可能性がある
-  - ホスト名のフォーマットをチェックしてmDNSの解決をしないようにするなどする
+- ICEを悪用してトラフィック攻撃に使われるかも
+- mDNSホスト名が公開されていると、その標的にされる可能性がある
+- ホスト名のフォーマットをチェックしてmDNSの解決をしないようにするなどする
 
-  ## 7. IANA Considerations
+## 7. IANA Considerations
 
-  - IANAには関係ない
+- IANAには関係ない
