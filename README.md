@@ -266,7 +266,7 @@ Linked means I've already read through.
 - [draft-ietf-rtcweb-ip-handling-12](./summary/draft-ietf-rtcweb-ip-handling-12.md)
   - WebRTC IP Address Handling Requirements
   - P2Pするために集めたIPアドレスの扱いについて
-- [draft-ietf-rtcweb-mdns-ice-candidates-03](./summary/draft-ietf-rtcweb-mdns-ice-candidates-03.md)
+- [draft-ietf-rtcweb-mdns-ice-candidates-04](./summary/draft-ietf-rtcweb-mdns-ice-candidates-04.md)
   - Using Multicast DNS to protect privacy when exposing ICE candidates
   - プライバシー保護のためにプライベートIPの代わりにmDNSの登録名を使う提案について
 - [draft-ietf-rtcweb-security-12](./summary/draft-ietf-rtcweb-security-12.md)
